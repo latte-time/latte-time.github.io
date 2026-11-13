@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://latte-time.github.io/sitemap.xml
+#DaumWebMasterTool:5cd3b806890ed199846ca334111474cba07f0d7f747436cb8fec2cbf16656355:LJPampnqaffzNtkuALZiYQ==
