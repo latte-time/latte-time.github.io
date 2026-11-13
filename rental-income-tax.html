@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주택임대소득세 계산기 2026 – 분리과세 14%, 간주임대료, 등록·미등록 | 라떼타임 계산기</title>
+<meta name="description" content="월세 수입과 보증금, 주택 수를 넣으면 주택임대소득 분리과세(14%) 세액을 계산합니다. 3주택 간주임대료, 2026년 신설된 고가 2주택 보증금 과세, 등록임대 필요경비 60%·공제 400만 원을 반영했습니다.">
+<link rel="canonical" href="https://latte-time.github.io/rental-income-tax.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="주택임대소득세 계산기 2026 – 분리과세 14%, 간주임대료, 등록·미등록">
+<meta property="og:description" content="월세 수입과 보증금, 주택 수를 넣으면 주택임대소득 분리과세(14%) 세액을 계산합니다. 3주택 간주임대료, 2026년 신설된 고가 2주택 보증금 과세, 등록임대 필요경비 60%·공제 400만 원을 반영했습니다.">
+<meta property="og:url" content="https://latte-time.github.io/rental-income-tax.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="tax.html">세금</a> › 주택임대소득세</nav>
+</div></header>
+<main class="wrap">
+  <h1>주택임대소득세 계산기 (분리과세)</h1>
+  <p class="lead">1년 월세와 보증금만 넣으면 5월에 낼 임대소득세를 계산합니다.</p>
+  <section class="calc" aria-label="주택임대소득세 계산">
+<div class="row"><label class="label" for="rent">1년 월세 수입 합계</label><div class="money"><input id="rent" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 1,200"><span>만원</span></div></div>
+<div class="row"><span class="label">보유 주택 수 (부부 합산)</span><div class="seg" role="radiogroup"><input type="radio" name="cnt" id="cnt-0" value="1"><label for="cnt-0">1주택</label><input type="radio" name="cnt" id="cnt-1" value="2" checked><label for="cnt-1">2주택</label><input type="radio" name="cnt" id="cnt-2" value="3"><label for="cnt-2">3주택 이상</label></div></div>
+<div id="g-dep"><div class="row"><label class="label" for="dep">보증금·전세금 합계</label><div class="money"><input id="dep" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 50,000"><span>만원</span></div><div class="hint">전용 40㎡ 이하·기준시가 2억 이하 소형주택은 빼고 입력</div></div></div>
+<div class="row"><label style="display:block"><input type="checkbox" id="hi"> 기준시가 12억 원 넘는 주택이 있음</label></div>
+<div class="row"><span class="label">임대사업자 등록</span><div class="seg" role="radiogroup"><input type="radio" name="reg" id="reg-0" value="n" checked><label for="reg-0">미등록</label><input type="radio" name="reg" id="reg-1" value="y"><label for="reg-1">등록 (세무서·지자체 모두, 요건 충족)</label></div></div>
+<div class="row"><label style="display:block"><input type="checkbox" id="other" checked> 임대소득 외 다른 종합소득금액이 2,000만 원 이하</label><div class="hint">근로소득금액·사업소득금액 등. 넘으면 기본공제가 없습니다.</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>주택 수별 과세 대상</h2>
+    <table class="rate"><thead><tr><th>주택 수 (부부 합산)</th><th>월세</th><th>보증금·전세금</th></tr></thead><tbody>
+      <tr><td>1주택</td><td>비과세 (기준시가 12억 초과는 과세)</td><td>과세 안 함</td></tr>
+      <tr><td>2주택</td><td>과세</td><td>과세 안 함<br><small>2026년 귀속부터 12억 초과 주택 보유 + 보증금 합계 12억 초과 시 과세</small></td></tr>
+      <tr><td>3주택 이상</td><td>과세</td><td>보증금 합계 3억 원 초과분 과세</td></tr>
+    </tbody></table>
+    <p>전용 40㎡ 이하이면서 기준시가 2억 원 이하인 소형주택은 2026년 12월 31일까지 주택 수와 보증금 계산에서 빠집니다.</p>
+    <h3>간주임대료</h3>
+    <p><b>(보증금 합계 − 3억 원) × 60% × 정기예금이자율 3.1%</b>를 임대수입으로 봅니다.</p>
+    <h3>분리과세 (연 임대수입 2,000만 원 이하)</h3>
+    <table class="rate"><thead><tr><th>구분</th><th>필요경비율</th><th>기본공제</th></tr></thead><tbody>
+      <tr><td>미등록</td><td>50%</td><td>200만 원</td></tr>
+      <tr><td>등록 (요건 충족)</td><td>60%</td><td>400만 원</td></tr>
+    </tbody></table>
+    <p>기본공제는 임대소득 외 다른 종합소득금액이 2,000만 원 이하일 때만 받습니다. 세율은 14%(지방세 포함 15.4%)입니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>미등록 2주택, 월세 연 2,000만 원</b><br>2,000만 − 경비 1,000만 − 공제 200만 = 800만 × 14% = 112만 + 지방세 = <b>123만 2천 원</b></div>
+    <div class="ex"><b>등록 2주택, 월세 연 2,000만 원</b><br>2,000만 − 1,200만 − 400만 = 400만 × 14% = 56만 + 지방세 = <b>61만 6천 원</b></div>
+    <div class="ex"><b>미등록 3주택, 전세만 보증금 합계 8억 원</b><br>간주임대료 (8억 − 3억) × 60% × 3.1% = 930만 → 930만 − 465만 − 200만 = 265만 × 14% = <b>약 40만 8천 원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>사업장현황신고도 해야 하나요?</summary><p>주택임대사업자는 매년 2월 10일까지 사업장현황신고를 합니다. 안 하면 수입금액의 0.2% 가산세(사업자등록한 경우)가 붙을 수 있습니다.</p></details>
+    <details><summary>임대소득이 있으면 건강보험 피부양자에서 빠지나요?</summary><p>사업자등록 여부와 소득 금액에 따라 피부양자 자격을 잃을 수 있습니다. 국민건강보험공단 기준을 확인하세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="income-tax.html">종합소득세 계산기</a><a href="rent-yield.html">임대수익률 계산기</a><a href="rent-convert.html">전월세 전환 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>소득세법 제12조(비과세 주택임대소득), 제25조(총수입금액 계산 특례, 간주임대료, 소형주택 제외 2026.12.31까지), 제64조의2(주택임대소득 분리과세), 같은 법 시행령 제53조, 시행규칙(정기예금이자율 연 3.1%, 2026년 귀속).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 종합과세 비교, 등록임대 세액감면, 간주임대료의 금융수익 차감은 반영하지 않았습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var DEPOSIT_RATE = 3.1;   // 간주임대료 정기예금이자율 (2026년 귀속)
+function deemedRent(cnt, dep, hi){
+  if (cnt >= 3 && dep > 3e8) return Math.floor((dep - 3e8) * 0.6 * DEPOSIT_RATE / 100);
+  if (cnt === 2 && hi && dep > 12e8) return Math.floor((dep - 3e8) * 0.6 * DEPOSIT_RATE / 100);
+  return 0;
+}
+function rentalTax(o){
+  if (o.cnt === 1 && !o.hi) return {exempt: true};
+  var deemed = deemedRent(o.cnt, o.dep, o.hi);
+  var income = o.rent + deemed;
+  if (income > 2e7) return {over: true, income: income, deemed: deemed};
+  var expense = Math.floor(income * (o.reg ? 0.6 : 0.5));
+  var ded = o.other ? (o.reg ? 4e6 : 2e6) : 0;
+  var base = Math.max(0, income - expense - ded);
+  var tax = Math.floor(base * 0.14 / 10) * 10, local = Math.floor(tax * 0.1 / 10) * 10;
+  return {deemed: deemed, income: income, expense: expense, ded: ded, base: base, tax: tax, local: local, total: tax + local};
+}
+// CALC-END
+
+function render(){
+  var M=10000, o={rent:num('rent')*M, cnt:parseInt(val('cnt')||'2',10), dep:num('dep')*M, hi:$('hi').checked, reg:val('reg')==='y', other:$('other').checked};
+  $('g-dep').style.display = o.cnt===1 ? 'none' : '';
+  if(!o.rent && !o.dep){ empty('월세 수입이나 보증금을 입력하면 결과가 나옵니다.'); return; }
+  var r=rentalTax(o);
+  if(r.exempt){ show('주택임대소득세', '0원 (비과세)', null, '1주택(기준시가 12억 원 이하)의 월세는 비과세입니다. 전세보증금도 과세하지 않습니다.'); return; }
+  if(r.over){ show('분리과세 선택 불가', man(r.income), [['간주임대료', man(r.deemed)]], '연 임대수입이 2,000만 원을 넘어 다른 소득과 합쳐 종합과세로 신고해야 합니다. 종합소득세 계산기를 쓰세요.'); return; }
+  show('분리과세 시 낼 세금', won(r.total), [
+    ['월세 수입', man(o.rent)],['간주임대료 (보증금 과세분)', man(r.deemed)],['총수입', man(r.income)],
+    ['필요경비 ('+(o.reg?'60%':'50%')+')', '−'+man(r.expense)],['기본공제', '−'+man(r.ded)],
+    ['과세표준', man(r.base)],['소득세 (14%)', won(r.tax)],['지방소득세 (1.4%)', won(r.local)]
+  ], '다음 해 5월 종합소득세 신고 때 냅니다. 등록임대 세액감면(30%·75%)은 반영하지 않았습니다.');
+}
+bind();
+</script>
+</body>
+</html>

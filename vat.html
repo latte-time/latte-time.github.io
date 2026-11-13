@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부가세 계산기 – 공급가액·부가세·합계금액 10% 계산 | 라떼타임 계산기</title>
+<meta name="description" content="공급가액만 넣으면 부가세 10%와 합계금액을, 합계금액만 넣으면 공급가액과 부가세를 바로 계산합니다. 세금계산서 작성할 때 쓰는 계산 방법과 예시를 정리했습니다.">
+<link rel="canonical" href="https://latte-time.github.io/vat.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="부가세 계산기 – 공급가액·부가세·합계금액">
+<meta property="og:description" content="공급가액 ↔ 합계금액 양방향 부가세 10% 계산.">
+<meta property="og:url" content="https://latte-time.github.io/vat.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+  a{color:var(--brand)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+  header.site{background:var(--card);border-bottom:1px solid var(--line)}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+  .crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+  h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+  .lead{color:var(--muted);margin:0 0 20px}
+  .calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .row{margin-bottom:16px}
+  .label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg input{position:absolute;opacity:0;pointer-events:none}
+  .seg label{flex:1 1 0;min-width:110px;text-align:center;padding:10px 8px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px}
+  .seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+  .seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+  .money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+  .money input{flex:1;border:0;padding:12px 14px;font-size:18px;font-family:inherit;color:var(--ink);min-width:0;text-align:right}
+  .money input:focus{outline:none}
+  .money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+  .money span{padding:0 14px;color:var(--muted);font-size:15px}
+  .result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+  .result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+  .result .sub{font-size:15px;color:var(--muted)}
+  .result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+  .result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  article{margin:34px 0}
+  article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+  article h3{font-size:17px;margin:22px 0 6px}
+  table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+  table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+  table.rate th{background:var(--soft)}
+  .ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+  .ex b{color:var(--brand)}
+  details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+  summary{font-weight:700;cursor:pointer}
+  .more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+  .disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+  @media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="tax.html">기본 세금</a> › 부가세</nav>
+</div></header>
+
+<main class="wrap">
+  <h1>부가세 계산기 (공급가액·부가세·합계금액)</h1>
+  <p class="lead">공급가액이나 합계금액 중 하나만 넣으면 부가가치세 10%를 나눠서 바로 계산합니다.</p>
+
+  <section class="calc" aria-label="부가세 계산">
+    <div class="row">
+      <span class="label">입력 기준</span>
+      <div class="seg" role="radiogroup">
+        <input type="radio" name="dir" id="d-s" value="supply" checked><label for="d-s">공급가액 입력<br><small>부가세 별도 금액</small></label>
+        <input type="radio" name="dir" id="d-t" value="total"><label for="d-t">합계금액 입력<br><small>부가세 포함 금액</small></label>
+      </div>
+    </div>
+    <div class="row">
+      <label class="label" for="amt" id="amtLabel">공급가액</label>
+      <div class="money"><input id="amt" inputmode="numeric" autocomplete="off" placeholder="예: 1,000,000"><span>원</span></div>
+    </div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">금액을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+
+  <article>
+    <h2>부가세 계산 방법</h2>
+    <p>부가가치세 세율은 10%입니다. 물건값이나 서비스 대가(공급가액)에 10%를 더한 금액이 소비자가 내는 합계금액입니다.</p>
+    <table class="rate">
+      <thead><tr><th>알고 있는 금액</th><th>부가세</th><th>나머지 금액</th></tr></thead>
+      <tbody>
+        <tr><td>공급가액</td><td>공급가액 × 10%</td><td>합계금액 = 공급가액 × 1.1</td></tr>
+        <tr><td>합계금액</td><td>합계금액 − 공급가액</td><td>공급가액 = 합계금액 ÷ 1.1</td></tr>
+      </tbody>
+    </table>
+    <p>합계금액을 1.1로 나누면 원 단위 아래가 남는 경우가 많습니다. 이 계산기는 공급가액을 원 단위로 반올림하고, 합계금액에서 공급가액을 뺀 값을 부가세로 표시합니다. 세금계산서 발행 프로그램에 따라 1원 차이가 날 수 있습니다.</p>
+
+    <h2>계산 예시</h2>
+    <div class="ex"><b>공급가액 100만 원</b><br>부가세 100,000원 → 합계금액 <b>1,100,000원</b></div>
+    <div class="ex"><b>합계금액 55만 원</b><br>550,000 ÷ 1.1 = 공급가액 <b>500,000원</b>, 부가세 50,000원</div>
+    <div class="ex"><b>합계금액 1만 원</b><br>10,000 ÷ 1.1 = 9,090.9… → 공급가액 <b>9,091원</b>, 부가세 909원</div>
+
+    <h2>자주 묻는 질문</h2>
+    <details><summary>간이과세자도 10%로 계산하나요?</summary><p>간이과세자는 업종별 부가가치율에 10%를 곱해서 부가세를 계산하므로 일반과세자보다 적게 냅니다. 이 계산기는 일반과세자 기준(10%)입니다.</p></details>
+    <details><summary>부가세가 없는 거래도 있나요?</summary><p>쌀·채소 같은 가공하지 않은 식료품, 의료·교육 용역, 주택 임대 등은 부가가치세가 면제됩니다. 면세 거래에는 계산서를 발행합니다.</p></details>
+    <details><summary>부가세는 언제 신고하나요?</summary><p>개인 일반과세자는 1월(7~12월분)과 7월(1~6월분)에 확정신고를 합니다. 간이과세자는 1년에 한 번, 1월에 신고합니다.</p></details>
+    <details><summary>프리랜서 대금에 부가세를 붙여야 하나요?</summary><p>사업자등록이 없는 프리랜서는 보통 부가세 없이 3.3%를 원천징수하고 받습니다. 원천징수 금액은 원천징수(3.3%) 계산기에서 확인할 수 있습니다.</p></details>
+
+    <h2>다른 계산기</h2>
+    <div class="more">
+      <a href="withholding.html">원천징수(3.3%) 계산기</a>
+      <a href="jungaebosu.html">중개보수 계산기</a>
+    </div>
+
+    <h2>기준과 출처</h2>
+    <p>부가가치세법 제30조(세율 10%), 제63조(간이과세자 납부세액 계산), 제26조(면세).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 세액은 과세 유형과 거래 내용에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+
+<script>
+// CALC-START
+function vatCalc(amount, dir){
+  amount = Math.max(0, Math.floor(amount || 0));
+  var supply, vat, total;
+  if (dir === 'total') { total = amount; supply = Math.round(total * 10 / 11); vat = total - supply; }
+  else { supply = amount; vat = Math.floor(supply / 10); total = supply + vat; }
+  return {supply: supply, vat: vat, total: total};
+}
+// CALC-END
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var won = function(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; };
+  function num(el){ var v = el.value.replace(/[^0-9]/g, ''); return v ? parseInt(v, 10) : 0; }
+  function dir(){ return document.querySelector('input[name="dir"]:checked').value; }
+  function render(){
+    var d = dir();
+    $('amtLabel').textContent = d === 'supply' ? '공급가액' : '합계금액';
+    var a = num($('amt')), box = $('result');
+    if (!a) { box.innerHTML = '<div class="sub">금액을 입력하면 결과가 여기에 나옵니다.</div>'; return; }
+    var r = vatCalc(a, d);
+    box.innerHTML = '<div class="sub">' + (d === 'supply' ? '합계금액' : '공급가액') + '</div><div class="big">' + won(d === 'supply' ? r.total : r.supply) + '</div>' +
+      '<table><tr><td>공급가액</td><td>' + won(r.supply) + '</td></tr><tr><td>부가세 (10%)</td><td>' + won(r.vat) + '</td></tr><tr><td>합계금액</td><td>' + won(r.total) + '</td></tr></table>' +
+      '<div class="note">일반과세자 10% 기준입니다.</div>';
+  }
+  $('amt').addEventListener('input', function(){ var n = num(this); this.value = n ? n.toLocaleString('ko-KR') : ''; render(); });
+  document.querySelectorAll('input[name="dir"]').forEach(function(el){ el.addEventListener('change', render); });
+  render();
+})();
+</script>
+</body>
+</html>

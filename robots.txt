@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://latte-time.github.io/sitemap.xml

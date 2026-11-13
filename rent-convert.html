@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전월세 전환 계산기 – 전세↔월세 전환율 5%·갱신 5% 인상 상한 | 라떼타임 계산기</title>
+<meta name="description" content="전세 보증금을 월세로, 월세를 전세로 바꾸면 얼마인지 계산합니다. 법정 전월세 전환율 상한(기준금리+2%)과 계약 갱신 때 5% 인상 상한도 함께 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/rent-convert.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="전월세 전환 계산기 – 전세↔월세 전환율 5%·갱신 5% 인상 상한">
+<meta property="og:description" content="전세 보증금을 월세로, 월세를 전세로 바꾸면 얼마인지 계산합니다. 법정 전월세 전환율 상한(기준금리+2%)과 계약 갱신 때 5% 인상 상한도 함께 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/rent-convert.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="realestate.html">부동산</a> › 전월세 전환</nav>
+</div></header>
+<main class="wrap">
+  <h1>전월세 전환 계산기 (전세↔월세, 5% 인상)</h1>
+  <p class="lead">보증금과 월세를 넣으면 전환 금액과 법정 상한을 바로 계산합니다.</p>
+  <section class="calc" aria-label="전월세 전환 계산">
+<div class="row"><span class="label">무엇을 계산할까요?</span><div class="seg" role="radiogroup"><input type="radio" name="mode" id="mode-0" value="j2w" checked><label for="mode-0">전세 → 월세</label><input type="radio" name="mode" id="mode-1" value="w2j"><label for="mode-1">월세 → 전세</label><input type="radio" name="mode" id="mode-2" value="up"><label for="mode-2">갱신 5% 인상</label></div></div>
+<div id="g-j2w">
+<div class="two"><div class="row"><label class="label" for="jeonse">지금 전세 보증금</label><div class="money"><input id="jeonse" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 30,000"><span>만원</span></div></div><div class="row"><label class="label" for="newdep">바꾼 뒤 보증금</label><div class="money"><input id="newdep" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 20,000"><span>만원</span></div></div></div>
+</div>
+<div id="g-w2j" style="display:none">
+<div class="two"><div class="row"><label class="label" for="wdep">월세 보증금</label><div class="money"><input id="wdep" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 5,000"><span>만원</span></div></div><div class="row"><label class="label" for="wrent">월세</label><div class="money"><input id="wrent" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 100"><span>만원</span></div></div></div>
+</div>
+<div id="g-up" style="display:none">
+<div class="two"><div class="row"><label class="label" for="udep">지금 보증금</label><div class="money"><input id="udep" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 20,000"><span>만원</span></div></div><div class="row"><label class="label" for="urent">지금 월세 <small>(없으면 비워 두세요)</small></label><div class="money"><input id="urent" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 50"><span>만원</span></div></div></div>
+</div>
+<div id="g-rate"><div class="row"><label class="label" for="rate">전환율</label><div class="money"><input id="rate" class="dec" inputmode="decimal" autocomplete="off" value="5.0" placeholder="5.0"><span>%</span></div><div class="hint">법정 상한: 기준금리 3.00% + 2% = 연 5.0% (2026년 11월 13일 기준). 집주인과 합의한 비율이 있으면 바꿔 넣으세요.</div></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>전월세 전환 계산 방법</h2>
+    <table class="rate"><tbody>
+      <tr><th>전세 → 월세</th><td>월세 = (전세 보증금 − 바꾼 뒤 보증금) × 전환율 ÷ 12</td></tr>
+      <tr><th>월세 → 전세</th><td>전세 보증금 = 월세 보증금 + 월세 × 12 ÷ 전환율</td></tr>
+      <tr><th>갱신 5% 인상</th><td>보증금·월세 각각 지금 금액의 5% 이내</td></tr>
+    </tbody></table>
+    <h3>법정 전월세 전환율 상한</h3>
+    <p>주택은 <b>연 10%</b>와 <b>한국은행 기준금리 + 2%</b> 중 낮은 비율을 넘길 수 없습니다(주택임대차보호법 시행령 제9조).</p>
+    <p>2026년 11월 13일 현재 기준금리는 연 3.00%라서 상한은 <b>연 5.0%</b>입니다. 기준금리가 바뀌면 상한도 같이 바뀝니다.</p>
+    <table class="rate"><thead><tr><th>기준금리 변경일</th><th>기준금리</th><th>주택 전환율 상한</th></tr></thead><tbody>
+      <tr><td>2026.8.27</td><td>3.00%</td><td>5.0%</td></tr>
+      <tr><td>2026.7.16</td><td>2.75%</td><td>4.75%</td></tr>
+      <tr><td>2025.5.29</td><td>2.50%</td><td>4.5%</td></tr>
+    </tbody></table>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>전세 3억 원 → 보증금 2억 원 + 월세</b><br>1억 원 × 5.0% ÷ 12 = 월세 <b>41만 6,667원</b></div>
+    <div class="ex"><b>전세 2억 원 → 보증금 5,000만 원 + 월세</b><br>1억 5,000만 원 × 5.0% ÷ 12 = 월세 <b>62만 5,000원</b></div>
+    <div class="ex"><b>갱신 때 보증금 2억 원, 월세 50만 원</b><br>보증금 최대 2억 1,000만 원, 월세 최대 52만 5,000원</div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>집주인이 6%로 계산해 달라고 하면요?</summary><p>계약 기간 중이나 갱신 때 전세를 월세로 바꾸는 경우 법정 상한(현재 5.0%)을 넘는 부분은 효력이 없습니다. 새로 맺는 계약은 당사자 합의로 정합니다.</p></details>
+    <details><summary>갱신 때 보증금과 월세를 둘 다 5% 올릴 수 있나요?</summary><p>법은 보증금이나 차임 증액을 약정한 금액의 20분의 1(5%)로 제한합니다. 둘을 함께 올릴 때는 전환율로 합쳐서 5%를 넘는지 따지는 경우가 많으니 분쟁이 생기면 주택임대차분쟁조정위원회나 대한법률구조공단(132)에 확인하세요.</p></details>
+    <details><summary>상가도 같은가요?</summary><p>아닙니다. 상가는 연 12%와 기준금리의 4.5배 중 낮은 비율이 상한입니다. 현재는 12%입니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="jungaebosu.html">중개보수 계산기</a><a href="rent-yield.html">임대수익률 계산기</a><a href="loan-repay.html">대출 원리금 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>주택임대차보호법 제7조(차임 등의 증감청구권), 제7조의2(월차임 전환 시 산정률의 제한), 같은 법 시행령 제8조(증액 청구 20분의 1), 제9조(기준금리 + 연 2%, 연 10%). 한국은행 기준금리 연 3.00%(2026.8.27 인상, 2026.10.22 동결).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 기준금리는 2026년 11월 26일 금융통화위원회에서 바뀔 수 있습니다. 바뀌면 이 페이지를 수정합니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var BASE_RATE = 3.00;           // 한국은행 기준금리 (2026.8.27 인상, 2026.10.22 동결)
+function legalCap(base){ return Math.min(10, base + 2); }   // 주택: min(연 10%, 기준금리+2%p)
+function jeonseToWolse(jeonse, newdep, rate){ var diff = jeonse - newdep; return {diff: diff, rent: diff * rate / 100 / 12}; }
+function wolseToJeonse(dep, rent, rate){ return {add: rate > 0 ? rent * 12 / (rate / 100) : 0, total: dep + (rate > 0 ? rent * 12 / (rate / 100) : 0)}; }
+function renewCap(dep, rent){ return {dep: Math.floor(dep * 1.05), rent: Math.floor(rent * 1.05), depUp: Math.floor(dep * 0.05), rentUp: Math.floor(rent * 0.05)}; }
+// CALC-END
+
+function render(){
+  var M=10000, mode=val('mode') || 'j2w';
+  ['j2w','w2j','up'].forEach(function(k){ $('g-'+k).style.display = (k===mode)?'':'none'; });
+  $('g-rate').style.display = (mode==='up')?'none':'';
+  var rate = num('rate'), cap = legalCap(BASE_RATE);
+  var capNote = rate > cap ? '입력한 전환율 '+rate+'%는 법정 상한 '+cap.toFixed(2)+'%보다 높습니다. 주택은 상한을 넘는 부분을 임차인이 거절할 수 있습니다.' : '법정 상한 '+cap.toFixed(2)+'% (기준금리 '+BASE_RATE.toFixed(2)+'% + 2%) 기준입니다.';
+  if(mode==='j2w'){
+    var j=num('jeonse')*M, d=num('newdep')*M;
+    if(!j){ empty('지금 전세 보증금을 입력하면 결과가 나옵니다.'); return; }
+    if(d>=j){ empty('바꾼 뒤 보증금은 지금 전세 보증금보다 적어야 합니다.'); return; }
+    if(!rate){ empty('전환율을 입력하세요.'); return; }
+    var r=jeonseToWolse(j,d,rate);
+    show('바꾼 뒤 월세', man(Math.round(r.rent)), [['월세로 바꾸는 보증금', man(r.diff)],['적용 전환율', rate+'%'],['법정 상한으로 계산한 월세', man(Math.round(r.diff*cap/100/12))],['1년 월세 합계', man(Math.round(r.rent*12))]], capNote);
+  } else if(mode==='w2j'){
+    var wd=num('wdep')*M, wr=num('wrent')*M;
+    if(!wr){ empty('월세를 입력하면 결과가 나옵니다.'); return; }
+    if(!rate){ empty('전환율을 입력하세요.'); return; }
+    var r2=wolseToJeonse(wd,wr,rate);
+    show('전세로 바꾸면 보증금', man(Math.round(r2.total)), [['지금 보증금', man(wd)],['월세를 보증금으로 바꾼 금액', man(Math.round(r2.add))],['적용 전환율', rate+'%']], '월세를 전세로 바꿀 때는 법정 상한이 없어 집주인과 합의한 비율을 씁니다.');
+  } else {
+    var ud=num('udep')*M, ur=num('urent')*M;
+    if(!ud && !ur){ empty('지금 보증금이나 월세를 입력하면 결과가 나옵니다.'); return; }
+    var c=renewCap(ud,ur), list=[['보증금 최대', man(c.dep)+' (+'+man(c.depUp)+')']];
+    if(ur) list.push(['월세 최대', man(c.rent)+' (+'+man(c.rentUp)+')']);
+    show('갱신 때 올릴 수 있는 최대 금액', ur ? man(c.dep)+' / 월 '+man(c.rent) : man(c.dep), list, '계약갱신요구권을 쓴 갱신 계약에만 5% 상한이 걸립니다. 새로 맺는 계약에는 적용되지 않습니다.');
+  }
+}
+bind();
+</script>
+</body>
+</html>

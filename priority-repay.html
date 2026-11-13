@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>최우선변제금 계산기 – 소액임차인 해당 여부, 지역별 보증금 기준 | 라떼타임 계산기</title>
+<meta name="description" content="지역, 보증금, 근저당 설정일을 넣으면 소액임차인에 해당하는지와 경매 때 먼저 돌려받는 최우선변제금(서울 5,500만 원 등)을 계산합니다. 근저당 설정 시점별 과거 기준도 반영했습니다.">
+<link rel="canonical" href="https://latte-time.github.io/priority-repay.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="최우선변제금 계산기 – 소액임차인 해당 여부, 지역별 보증금 기준">
+<meta property="og:description" content="지역, 보증금, 근저당 설정일을 넣으면 소액임차인에 해당하는지와 경매 때 먼저 돌려받는 최우선변제금(서울 5,500만 원 등)을 계산합니다. 근저당 설정 시점별 과거 기준도 반영했습니다.">
+<meta property="og:url" content="https://latte-time.github.io/priority-repay.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="realestate.html">부동산</a> › 최우선변제</nav>
+</div></header>
+<main class="wrap">
+  <h1>최우선변제금 계산기 (소액임차인)</h1>
+  <p class="lead">보증금과 지역, 근저당 설정일만 넣으면 경매 때 먼저 받을 수 있는 금액을 계산합니다.</p>
+  <section class="calc" aria-label="최우선변제 계산">
+<div class="row"><span class="label">집이 있는 곳</span><div class="seg" role="radiogroup"><input type="radio" name="reg" id="reg-0" value="seoul" checked><label for="reg-0">서울</label><input type="radio" name="reg" id="reg-1" value="over"><label for="reg-1">과밀억제권역·세종·용인·화성·김포</label><input type="radio" name="reg" id="reg-2" value="metro"><label for="reg-2">광역시·안산·광주·파주·이천·평택</label><input type="radio" name="reg" id="reg-3" value="etc"><label for="reg-3">그 밖의 지역</label></div></div>
+<div class="row"><label class="label" for="dep">내 보증금</label><div class="money"><input id="dep" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 15,000"><span>만원</span></div><div class="hint">주택은 월세를 보증금으로 환산하지 않습니다</div></div>
+<div class="row"><span class="label">등기부의 첫 근저당(담보물권) 설정일</span><div class="seg" role="radiogroup"><input type="radio" name="era" id="era-0" value="2023" checked><label for="era-0">2023.2.21 이후 또는 없음</label><input type="radio" name="era" id="era-1" value="2021"><label for="era-1">2021.5.11~2023.2.20</label><input type="radio" name="era" id="era-2" value="2018"><label for="era-2">2018.9.18~2021.5.10</label></div></div>
+<div class="row"><label class="label" for="house">예상 낙찰가 <small>(선택)</small></label><div class="money"><input id="house" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 30,000"><span>만원</span></div><div class="hint">최우선변제금 합계는 주택가액의 1/2을 넘을 수 없습니다</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>소액임차인 최우선변제 기준 (2023년 2월 21일 이후)</h2>
+    <table class="rate"><thead><tr><th>지역</th><th>보증금 기준</th><th>최우선변제금</th></tr></thead><tbody>
+      <tr><td>서울</td><td>1억 6,500만 원 이하</td><td>5,500만 원</td></tr>
+      <tr><td>과밀억제권역, 세종·용인·화성·김포</td><td>1억 4,500만 원 이하</td><td>4,800만 원</td></tr>
+      <tr><td>광역시, 안산·광주·파주·이천·평택</td><td>8,500만 원 이하</td><td>2,800만 원</td></tr>
+      <tr><td>그 밖의 지역</td><td>7,500만 원 이하</td><td>2,500만 원</td></tr>
+    </tbody></table>
+    <h3>계약일이 아니라 근저당 설정일 기준</h3>
+    <p>어느 표를 쓸지는 내 계약일이 아니라 <b>그 집에 처음 근저당 등 담보물권이 설정된 날</b>로 정합니다. 2022년에 근저당이 잡힌 집이면 2026년에 계약해도 2021년 표(서울 1억 5,000만 원 이하·5,000만 원)를 씁니다.</p>
+    <table class="rate"><thead><tr><th>설정일</th><th>서울</th><th>과밀억제권역 등</th><th>광역시 등</th><th>그 밖</th></tr></thead><tbody>
+      <tr><td>2021.5.11~2023.2.20</td><td>1.5억 / 5,000만</td><td>1.3억 / 4,300만</td><td>7,000만 / 2,300만</td><td>6,000만 / 2,000만</td></tr>
+      <tr><td>2018.9.18~2021.5.10</td><td>1.1억 / 3,700만</td><td>1억 / 3,400만</td><td>6,000만 / 2,000만</td><td>5,000만 / 1,700만</td></tr>
+    </tbody></table>
+    <p>지역 분류는 시기마다 조금 달라 2018년 표는 김포가 광역시 등에, 2021년 표는 김포가 과밀억제권역 등에 들어갑니다.</p>
+    <h3>인천은 어디에 들어가나요?</h3>
+    <p>인천 대부분은 과밀억제권역입니다. 다만 강화군·옹진군, 경제자유구역(송도·청라·영종 등), 남동국가산업단지 등은 과밀억제권역에서 빠져 '광역시' 기준을 씁니다. 정확한 구역은 수도권정비계획법 시행령 별표로 확인하세요.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>서울, 보증금 1억 5,000만 원, 근저당 2023년 이후</b><br>소액임차인 해당 → <b>5,500만 원</b> 먼저, 나머지 9,500만 원은 순위 배당</div>
+    <div class="ex"><b>서울, 보증금 1억 6,000만 원, 근저당 2022년</b><br>2021년 표 기준 1억 5,000만 원 초과 → <b>최우선변제 대상 아님</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>확정일자만 받으면 되나요?</summary><p>최우선변제는 확정일자가 없어도 받지만, 전입신고와 입주(대항요건)를 경매 등기 전에 갖추고 배당요구를 해야 합니다. 확정일자는 나머지 보증금의 순위 배당에 필요합니다.</p></details>
+    <details><summary>집주인이 바뀌면요?</summary><p>대항력을 갖춘 임차인은 새 집주인에게도 보증금을 돌려받을 수 있습니다. 판단 기준일은 바뀌지 않습니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="rent-convert.html">전월세 전환 계산기</a><a href="jungaebosu.html">중개보수 계산기</a><a href="loan-limit.html">주담대 한도 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>주택임대차보호법 제8조(보증금 중 일정액의 보호), 같은 법 시행령 제10조(우선변제 금액, 주택가액 1/2 한도), 제11조(소액임차인 범위), 부칙(담보물권 설정 시점 기준). 2023.2.21 시행 기준 및 2018·2021년 개정 기준.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 선순위 권리자가 여럿이거나 시행령 개정 전후 권리가 섞인 경우 배당이 달라질 수 있습니다. 실제 배당은 법원이 정합니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var PR = {
+  '2023': {seoul: [16500, 5500], over: [14500, 4800], metro: [8500, 2800], etc: [7500, 2500]},
+  '2021': {seoul: [15000, 5000], over: [13000, 4300], metro: [7000, 2300], etc: [6000, 2000]},
+  '2018': {seoul: [11000, 3700], over: [10000, 3400], metro: [6000, 2000], etc: [5000, 1700]}
+};
+function priorityRepay(reg, era, dep, house){
+  var t = PR[era][reg], limit = t[0] * 1e4, amt = t[1] * 1e4;
+  if (dep > limit) return {ok: false, limit: limit, amt: amt};
+  var pay = Math.min(dep, amt);
+  var halfCut = house > 0 && pay > house / 2;
+  if (halfCut) pay = Math.floor(house / 2);
+  return {ok: true, limit: limit, amt: amt, pay: pay, halfCut: halfCut};
+}
+// CALC-END
+
+function render(){
+  var M=10000, reg=val('reg')||'seoul', era=val('era')||'2023', dep=num('dep')*M, house=num('house')*M;
+  if(!dep){ empty('보증금을 입력하면 결과가 나옵니다.'); return; }
+  var r=priorityRepay(reg,era,dep,house);
+  if(!r.ok){ show('소액임차인 아님', '최우선변제 대상 아님', [['보증금 기준 (이하)', man(r.limit)],['내 보증금', man(dep)]], '보증금이 기준을 넘습니다. 전입신고와 확정일자를 갖추면 순위에 따라 배당받는 우선변제권은 있습니다.'); return; }
+  show('경매 때 먼저 받는 금액', man(r.pay), [
+    ['소액임차인 보증금 기준 (이하)', man(r.limit)],['최우선변제 한도', man(r.amt)],['내 보증금', man(dep)],['나머지 보증금', man(dep-r.pay)+' (확정일자 순위로 배당)']
+  ], (r.halfCut?'주택가액의 1/2 한도에 걸려 줄었습니다. ':'')+'경매개시결정 등기 전에 전입·입주(대항요건)를 마치고, 배당요구 종기까지 유지·배당요구해야 받습니다.');
+}
+bind();
+</script>
+</body>
+</html>

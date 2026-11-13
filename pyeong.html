@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>평수 계산기 – 평 ↔ 제곱미터(㎡) 변환, 아파트 평형 환산 | 라떼타임 계산기</title>
+<meta name="description" content="평과 제곱미터(㎡)를 서로 바꿔 계산합니다. 59㎡·84㎡ 같은 아파트 전용면적이 몇 평인지, 공급면적과 전용면적 차이도 정리했습니다.">
+<link rel="canonical" href="https://latte-time.github.io/pyeong.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="평수 계산기 – 평 ↔ 제곱미터(㎡) 변환, 아파트 평형 환산">
+<meta property="og:description" content="평과 제곱미터(㎡)를 서로 바꿔 계산합니다. 59㎡·84㎡ 같은 아파트 전용면적이 몇 평인지, 공급면적과 전용면적 차이도 정리했습니다.">
+<meta property="og:url" content="https://latte-time.github.io/pyeong.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="unit.html">단위 변환</a> › 평수 변환</nav>
+</div></header>
+<main class="wrap">
+  <h1>평수 변환 계산기 (평 ↔ ㎡)</h1>
+  <p class="lead">평이나 제곱미터 중 하나만 넣으면 바로 바꿔 줍니다.</p>
+  <section class="calc" aria-label="평수 변환 계산">
+<div class="row"><span class="label">변환 방향</span><div class="seg" role="radiogroup"><input type="radio" name="dir" id="dir-0" value="m2" checked><label for="dir-0">㎡ → 평</label><input type="radio" name="dir" id="dir-1" value="py"><label for="dir-1">평 → ㎡</label></div></div>
+<div class="row"><label class="label" for="v">면적</label><div class="money"><input id="v" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 84"><span>㎡</span></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>평과 제곱미터 계산</h2>
+    <p>1평은 약 <b>3.3058㎡</b>입니다(정확히는 400/121㎡). ㎡를 평으로 바꿀 때는 3.3058로 나누고, 평을 ㎡로 바꿀 때는 3.3058을 곱합니다.</p>
+    <h3>자주 보는 아파트 면적</h3>
+    <table class="rate">
+      <thead><tr><th>전용면적</th><th>전용 평수</th><th>흔히 부르는 평형(공급 기준)</th></tr></thead>
+      <tbody>
+        <tr><td>59㎡</td><td>약 17.8평</td><td>24~25평형</td></tr>
+        <tr><td>84㎡</td><td>약 25.4평</td><td>32~34평형</td></tr>
+        <tr><td>114㎡</td><td>약 34.5평</td><td>43~45평형</td></tr>
+      </tbody>
+    </table>
+    <p>흔히 말하는 '34평'은 전용면적이 아니라 공급면적 기준입니다. 공급면적은 전용면적에 계단·복도 같은 주거공용면적을 더한 넓이라서 단지마다 조금씩 다릅니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>84㎡</b> ÷ 3.3058 = <b>25.41평</b></div>
+    <div class="ex"><b>30평</b> × 3.3058 = <b>99.17㎡</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>등기부나 계약서에는 왜 평이 없나요?</summary><p>2007년부터 법정계량단위인 ㎡를 쓰도록 하고 있어 공식 서류에는 ㎡로 적습니다. 평은 일상에서만 쓰입니다.</p></details>
+    <details><summary>전용면적과 공급면적은 뭐가 다른가요?</summary><p>전용면적은 우리 집 현관 안쪽 실제 생활 공간입니다. 공급면적은 여기에 계단·복도·엘리베이터 같은 공용 공간을 더한 넓이입니다. 발코니 확장 면적은 둘 다에 들어가지 않습니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="length-weight.html">길이·무게 변환</a><a href="jungaebosu.html">중개보수 계산기</a><a href="rent-yield.html">임대수익률 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>1평 = 400/121㎡(약 3.3058㎡). 계량에 관한 법률(법정계량단위 ㎡).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 금액은 개별 조건에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var PY = 400 / 121;  // 1평 = 400/121 ㎡ ≈ 3.305785
+function m2ToPy(m2){ return m2 / PY; }
+function pyToM2(py){ return py * PY; }
+// CALC-END
+
+function render(){
+  var d = val('dir'); document.querySelector('#v').nextElementSibling.textContent = d === 'm2' ? '㎡' : '평';
+  var v = num('v');
+  if(!v){ empty('면적을 입력하면 결과가 여기에 나옵니다.'); return; }
+  if (d === 'm2') show(v + '㎡는', m2ToPy(v).toFixed(2) + '평', [['1평', '약 3.3058㎡'], ['계산식', v + ' ÷ 3.3058']]);
+  else show(v + '평은', pyToM2(v).toFixed(2) + '㎡', [['1평', '약 3.3058㎡'], ['계산식', v + ' × 3.3058']]);
+}
+bind();
+</script>
+</body>
+</html>

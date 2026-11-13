@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>만 나이 계산기 – 생년월일로 만 나이·연 나이·띠 계산 | 라떼타임 계산기</title>
+<meta name="description" content="생년월일을 넣으면 오늘 기준 만 나이, 연 나이, 다음 생일까지 남은 날, 띠를 계산합니다. 2023년 만 나이 통일 기준을 반영했습니다.">
+<link rel="canonical" href="https://latte-time.github.io/age.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="만 나이 계산기 – 생년월일로 만 나이·연 나이·띠 계산">
+<meta property="og:description" content="생년월일을 넣으면 오늘 기준 만 나이, 연 나이, 다음 생일까지 남은 날, 띠를 계산합니다. 2023년 만 나이 통일 기준을 반영했습니다.">
+<meta property="og:url" content="https://latte-time.github.io/age.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="date.html">날짜·나이</a> › 만 나이</nav>
+</div></header>
+<main class="wrap">
+  <h1>만 나이 계산기</h1>
+  <p class="lead">생년월일만 넣으면 만 나이와 연 나이, 다음 생일까지 남은 날을 계산합니다.</p>
+  <section class="calc" aria-label="만 나이 계산">
+<div class="two"><div class="row"><label class="label" for="birth">생년월일</label><div class="money"><input type="date" id="birth" min="1900-01-01"></div></div><div class="row"><label class="label" for="base">기준일</label><div class="money"><input type="date" id="base"></div></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>만 나이 계산 방법</h2>
+    <p>만 나이는 태어난 날 0세에서 시작해 생일이 지날 때마다 1살씩 더합니다. 기준 연도에서 출생 연도를 빼고, 올해 생일이 아직 안 지났으면 1을 더 뺍니다.</p>
+    <table class="rate">
+      <thead><tr><th>나이 종류</th><th>계산</th><th>어디에 쓰나</th></tr></thead>
+      <tbody>
+        <tr><td>만 나이</td><td>생일 지날 때마다 +1</td><td>행정·민사 원칙 (2023년 6월 28일부터 통일)</td></tr>
+        <tr><td>연 나이</td><td>기준 연도 − 출생 연도</td><td>병역, 청소년보호법 등 일부 법률</td></tr>
+        <tr><td>세는 나이</td><td>연 나이 + 1</td><td>예전 일상 관습</td></tr>
+      </tbody>
+    </table>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>1990년 5월 20일생, 2026년 11월 13일 기준</b><br>생일 지남 → <b>만 36세</b> (연 나이 36세)</div>
+    <div class="ex"><b>1990년 12월 25일생, 2026년 11월 13일 기준</b><br>생일 전 → <b>만 35세</b> (연 나이 36세)</div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>2월 29일생은 생일이 언제인가요?</summary><p>윤년이 아닌 해에는 3월 1일에 나이가 늘어나는 것으로 계산했습니다.</p></details>
+    <details><summary>만 나이 통일 후에도 연 나이를 쓰는 경우가 있나요?</summary><p>병역 의무, 청소년의 술·담배 구매 제한처럼 개별 법률이 연 나이를 정해 둔 경우에는 연 나이를 씁니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="dday.html">D-day 계산기</a><a href="pyeong.html">평수 변환</a><a href="length-weight.html">길이·무게 변환</a></div>
+    <h2>기준과 출처</h2>
+    <p>민법 제158조(연령 계산에는 출생일 산입), 행정기본법 제7조의2·민법 제158조 개정(2023년 6월 28일 시행, 만 나이 통일).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 금액은 개별 조건에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function ageCalc(birthStr, baseStr){
+  var b = birthStr.split('-').map(Number), t = baseStr.split('-').map(Number);
+  var age = t[0] - b[0];
+  if (t[1] < b[1] || (t[1] === b[1] && t[2] < b[2])) age--;
+  var yearAge = t[0] - b[0];
+  var animals = ['원숭이','닭','개','돼지','쥐','소','호랑이','토끼','용','뱀','말','양'];
+  function dn(y,m,d){ return Date.UTC(y,m-1,d)/86400000; }
+  function bdayIn(y){ var m=b[1], d=b[2]; if(m===2 && d===29 && !((y%4===0 && y%100!==0) || y%400===0)){ m=3; d=1; } return dn(y,m,d); }
+  var today = dn(t[0],t[1],t[2]), next = bdayIn(t[0]);
+  if (next < today) next = bdayIn(t[0]+1);
+  return {age: age, yearAge: yearAge, koreanAge: yearAge + 1, untilBirthday: next - today, animal: animals[b[0] % 12], days: today - dn(b[0],b[1],b[2]) + 1};
+}
+// CALC-END
+
+(function(){ var d=new Date(); $('base').value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })();
+function render(){
+  var b = $('birth').value, t = $('base').value;
+  if(!b || !t){ empty('생년월일을 고르면 결과가 여기에 나옵니다.'); return; }
+  if(b > t){ empty('생년월일이 기준일보다 늦습니다.'); return; }
+  var r = ageCalc(b, t);
+  show('만 나이', '만 ' + r.age + '세', [
+    ['연 나이 (기준 연도 − 출생 연도)', r.yearAge + '세'],
+    ['예전 세는 나이', r.koreanAge + '세'],
+    ['다음 생일까지', r.untilBirthday === 0 ? '오늘이 생일입니다' : 'D-' + r.untilBirthday],
+    ['태어난 지', r.days.toLocaleString('ko-KR') + '일째'],
+    ['띠', r.animal + '띠']
+  ], '띠는 양력 출생 연도 기준입니다. 음력 설 전에 태어났다면 전년도 띠일 수 있습니다.');
+}
+bind();
+</script>
+</body>
+</html>

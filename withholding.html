@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.3% 계산기 – 프리랜서 원천징수·실수령액 계산 (2.2%·8.8% 포함) | 라떼타임 계산기</title>
+<meta name="description" content="프리랜서 3.3% 원천징수 세금과 실수령액을 바로 계산합니다. 실수령액에서 세전 금액 역산, 2027년 2.2% 개정안, 기타소득 8.8%까지 한 번에 계산할 수 있습니다.">
+<link rel="canonical" href="https://latte-time.github.io/withholding.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="3.3% 계산기 – 프리랜서 원천징수·실수령액">
+<meta property="og:description" content="지급액·실수령액 양방향 계산. 3.3%, 2.2%(2027 개정안), 8.8% 지원.">
+<meta property="og:url" content="https://latte-time.github.io/withholding.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+  a{color:var(--brand)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+  header.site{background:var(--card);border-bottom:1px solid var(--line)}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+  .crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+  h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+  .lead{color:var(--muted);margin:0 0 20px}
+  .calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .row{margin-bottom:16px}
+  .label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg input{position:absolute;opacity:0;pointer-events:none}
+  .seg label{flex:1 1 0;min-width:96px;text-align:center;padding:10px 8px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+  .seg label small{display:block;font-size:12px;opacity:.8}
+  .seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+  .seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+  .money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+  .money input{flex:1;border:0;padding:12px 14px;font-size:18px;font-family:inherit;color:var(--ink);min-width:0;text-align:right}
+  .money input:focus{outline:none}
+  .money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+  .money span{padding:0 14px;color:var(--muted);font-size:15px}
+  .hint{font-size:13px;color:var(--muted);margin-top:6px}
+  .result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+  .result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+  .result .sub{font-size:15px;color:var(--muted)}
+  .result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+  .result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  article{margin:34px 0}
+  article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+  article h3{font-size:17px;margin:22px 0 6px}
+  table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+  table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+  table.rate th{background:var(--soft)}
+  .ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+  .ex b{color:var(--brand)}
+  .callout{background:#fff8ef;border:1px solid #ecd9c3;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:15px}
+  details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+  summary{font-weight:700;cursor:pointer}
+  .more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+  .disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+  @media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="tax.html">기본 세금</a> › 원천징수</nav>
+</div></header>
+
+<main class="wrap">
+  <h1>원천징수 계산기 (3.3%·실수령액)</h1>
+  <p class="lead">받을 금액이나 통장에 들어온 금액 중 하나만 넣으면 원천징수 세금과 실수령액을 바로 계산합니다.</p>
+
+  <section class="calc" aria-label="원천징수 계산">
+    <div class="row">
+      <span class="label">소득 종류</span>
+      <div class="seg" role="radiogroup">
+        <input type="radio" name="kind" id="k-33" value="biz3" checked><label for="k-33">사업소득 3.3%<small>현행</small></label>
+        <input type="radio" name="kind" id="k-22" value="biz2"><label for="k-22">사업소득 2.2%<small>2027년 개정안</small></label>
+        <input type="radio" name="kind" id="k-88" value="etc"><label for="k-88">기타소득 8.8%<small>강연료 등</small></label>
+      </div>
+      <div class="hint" id="kindHint">프리랜서·배달·방송작가 등 인적용역 사업소득 (소득세 3% + 지방소득세 0.3%)</div>
+    </div>
+
+    <div class="row">
+      <span class="label">입력 기준</span>
+      <div class="seg" role="radiogroup">
+        <input type="radio" name="dir" id="dir-g" value="gross" checked><label for="dir-g">세전 금액 입력</label>
+        <input type="radio" name="dir" id="dir-n" value="net"><label for="dir-n">실수령액 입력</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="label" for="amt" id="amtLabel">세전 지급액</label>
+      <div class="money"><input id="amt" inputmode="numeric" autocomplete="off" placeholder="예: 1,000,000"><span>원</span></div>
+    </div>
+
+    <div class="result" id="result" aria-live="polite"><div class="sub">금액을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+
+  <article>
+    <h2>3.3%는 이렇게 나뉩니다</h2>
+    <p>프리랜서가 받는 인적용역 사업소득은 지급할 때 <b>소득세 3%</b>와 <b>지방소득세 0.3%</b>(소득세의 10%)를 떼고 줍니다. 둘을 합쳐 3.3%입니다.</p>
+    <p>소득세와 지방소득세는 각각 10원 미만을 버리고 계산합니다. 그래서 지급액 × 3.3%로 바로 구한 값과 몇십 원 차이가 날 수 있습니다.</p>
+    <table class="rate">
+      <thead><tr><th>구분</th><th>소득세</th><th>지방소득세</th><th>합계</th></tr></thead>
+      <tbody>
+        <tr><td>사업소득 (현행)</td><td>3%</td><td>0.3%</td><td>3.3%</td></tr>
+        <tr><td>사업소득 (2027년 개정안)</td><td>2%</td><td>0.2%</td><td>2.2%</td></tr>
+        <tr><td>기타소득 (필요경비 60%)</td><td>8%</td><td>0.8%</td><td>8.8%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2027년부터 2.2%로 바뀌나요?</h3>
+    <div class="callout">정부는 2026년 세제개편안에서 인적용역 사업소득 원천징수 소득세율을 3%에서 2%로 낮추는 안을 발표했습니다. 국회를 통과하면 2027년 1월 1일 이후 지급하는 소득부터 3.3% 대신 2.2%가 적용될 예정입니다. 법 개정이 확정되기 전까지는 현행 3.3%가 맞습니다.</div>
+
+    <h3>기타소득 8.8%는 무엇인가요?</h3>
+    <p>강연료, 심사료처럼 일시적으로 받는 인적용역 대가는 기타소득으로 봅니다. 받은 금액의 60%를 필요경비로 빼고 남은 40%에 소득세 20%를 매기고, 지방소득세 10%를 더합니다.</p>
+    <p>지급액 × 40% × 20% × 110% = 지급액의 8.8%입니다. 필요경비를 빼고 남은 기타소득금액이 한 건에 5만 원 이하이면 세금을 떼지 않습니다. 지급액으로 치면 12만 5천 원 이하입니다.</p>
+
+    <h2>계산 예시</h2>
+    <div class="ex"><b>3.3% · 지급액 100만 원</b><br>소득세 30,000원 + 지방소득세 3,000원 = 33,000원 → 실수령액 <b>967,000원</b></div>
+    <div class="ex"><b>3.3% · 실수령액 40만 원을 받으려면</b><br>세전 지급액 <b>413,640원</b> → 소득세 12,400원 + 지방소득세 1,240원 = 13,640원 공제</div>
+    <div class="ex"><b>2.2% (개정안) · 지급액 100만 원</b><br>소득세 20,000원 + 지방소득세 2,000원 = 22,000원 → 실수령액 <b>978,000원</b></div>
+    <div class="ex"><b>8.8% · 강연료 100만 원</b><br>기타소득금액 40만 원 × 20% = 소득세 80,000원 + 지방소득세 8,000원 → 실수령액 <b>912,000원</b></div>
+
+    <h2>자주 묻는 질문</h2>
+    <details><summary>3.3%를 뗐으면 세금 신고는 끝난 건가요?</summary><p>아닙니다. 3.3%는 미리 낸 세금입니다. 다음 해 5월 종합소득세 신고 때 실제 세금과 비교해서, 더 냈으면 돌려받고 덜 냈으면 더 냅니다.</p></details>
+    <details><summary>알바비에서 3.3%를 떼는 건 맞나요?</summary><p>근로계약을 맺고 일하는 아르바이트는 근로소득이라 3.3%가 아니라 근로소득 원천징수 방식이 적용됩니다. 실제로 어떤 소득으로 처리됐는지는 지급명세서나 홈택스에서 확인할 수 있습니다.</p></details>
+    <details><summary>세금이 1,000원도 안 되면 안 떼나요?</summary><p>원천징수세액이 1,000원 미만이면 징수하지 않는 소액부징수 규정이 있습니다. 다만 2024년 7월 1일 이후 지급하는 인적용역 사업소득 중 계속·반복적인 활동으로 받는 소득은 금액이 적어도 원천징수합니다.</p></details>
+    <details><summary>사업자등록을 한 프리랜서도 3.3%를 떼나요?</summary><p>부가가치세 과세사업자로 등록하고 세금계산서를 발행하는 경우에는 보통 원천징수 없이 공급가액에 부가세 10%를 더해 받습니다.</p></details>
+
+    <h2>다른 계산기</h2>
+    <div class="more">
+      <a href="vat.html">부가세 계산기</a>
+      <a href="jungaebosu.html">중개보수 계산기</a>
+    </div>
+
+    <h2>기준과 출처</h2>
+    <p>소득세법 제129조(원천징수세율), 제84조(기타소득 과세최저한), 제86조(소액부징수), 지방세법 개인지방소득세 특별징수 규정. 2026년 세제개편안(인적용역 사업소득 원천징수세율 인하안).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 원천징수 금액은 소득 구분과 지급처의 처리 방식에 따라 달라질 수 있습니다. 정확한 세액은 홈택스나 세무 전문가에게 확인하세요. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+
+<script>
+// CALC-START
+function withholdingFromGross(g, kind){
+  g = Math.max(0, Math.floor(g || 0));
+  var incomeTax, taxable = null, exempt = false;
+  if (kind === 'etc') {
+    taxable = Math.floor(g * 0.4);
+    if (taxable <= 50000) { exempt = true; incomeTax = 0; }
+    else incomeTax = Math.floor(taxable * 20 / 1000) * 10;
+  } else {
+    var pct = kind === 'biz2' ? 2 : 3;
+    incomeTax = Math.floor(g * pct / 1000) * 10;
+  }
+  var localTax = Math.floor(incomeTax / 100) * 10;
+  var total = incomeTax + localTax;
+  return {gross: g, taxable: taxable, exempt: exempt, incomeTax: incomeTax, localTax: localTax, total: total, net: g - total};
+}
+function withholdingFromNet(net, kind){
+  net = Math.max(0, Math.floor(net || 0));
+  var r = kind === 'etc' ? 0.088 : (kind === 'biz2' ? 0.022 : 0.033);
+  // 10원 미만 절사 때문에 같은 실수령액이 나오는 세전 금액이 여러 개일 수 있다. 그중 가장 큰 금액을 고른다.
+  var start = Math.max(0, Math.floor(net / (1 - r)) - 100), match = null, best = null;
+  for (var g = start; g <= start + 300; g++) {
+    var res = withholdingFromGross(g, kind);
+    if (res.net === net) match = res;
+    if (res.net > net && (best === null || res.net < best.net)) best = res;
+  }
+  if (match) return match;
+  if (kind === 'etc') { var low = withholdingFromGross(net, kind); if (low.net === net) return low; }
+  return best;
+}
+// CALC-END
+
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var won = function(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; };
+  function num(el){ var v = el.value.replace(/[^0-9]/g, ''); return v ? parseInt(v, 10) : 0; }
+  function val(n){ var c = document.querySelector('input[name="' + n + '"]:checked'); return c ? c.value : ''; }
+  var hints = {
+    biz3: '프리랜서·배달·방송작가 등 인적용역 사업소득 (소득세 3% + 지방소득세 0.3%)',
+    biz2: '2026년 세제개편안: 국회 통과 시 2027년 1월 1일 이후 지급분부터 적용 예정',
+    etc: '강연료·심사료 등 일시적 인적용역 (필요경비 60% 공제 후 20% + 지방소득세)'
+  };
+  function render(){
+    var kind = val('kind'), dir = val('dir');
+    $('kindHint').textContent = hints[kind];
+    $('amtLabel').textContent = dir === 'gross' ? '세전 지급액' : '실수령액 (통장에 들어온 금액)';
+    var a = num($('amt')), box = $('result');
+    if (!a) { box.innerHTML = '<div class="sub">금액을 입력하면 결과가 여기에 나옵니다.</div>'; return; }
+    var r = dir === 'gross' ? withholdingFromGross(a, kind) : withholdingFromNet(a, kind);
+    if (!r) { box.innerHTML = '<div class="sub">이 금액으로는 계산할 수 없습니다.</div>'; return; }
+    var rows = '<tr><td>세전 지급액</td><td>' + won(r.gross) + '</td></tr>';
+    if (kind === 'etc') rows += '<tr><td>기타소득금액 (필요경비 60% 공제)</td><td>' + won(r.taxable) + '</td></tr>';
+    rows += '<tr><td>소득세</td><td>' + won(r.incomeTax) + '</td></tr>';
+    rows += '<tr><td>지방소득세</td><td>' + won(r.localTax) + '</td></tr>';
+    rows += '<tr><td>공제 합계</td><td>' + won(r.total) + '</td></tr>';
+    rows += '<tr><td>실수령액</td><td>' + won(r.net) + '</td></tr>';
+    var headLabel = dir === 'gross' ? '실수령액' : '세전 지급액';
+    var head = dir === 'gross' ? r.net : r.gross;
+    var note = r.exempt ? '기타소득금액이 5만 원 이하라 원천징수하지 않습니다(과세최저한).' : '소득세·지방소득세는 각각 10원 미만을 버린 금액입니다.';
+    if (kind === 'biz2') note += ' 2.2%는 법 개정이 확정돼야 적용됩니다.';
+    box.innerHTML = '<div class="sub">' + headLabel + '</div><div class="big">' + won(head) + '</div><table>' + rows + '</table><div class="note">' + note + '</div>';
+  }
+  $('amt').addEventListener('input', function(){ var n = num(this); this.value = n ? n.toLocaleString('ko-KR') : ''; render(); });
+  document.querySelectorAll('input[name="kind"],input[name="dir"]').forEach(function(el){ el.addEventListener('change', render); });
+  render();
+})();
+</script>
+</body>
+</html>

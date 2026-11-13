@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부모급여·아동수당 계산기 – 2026 자녀 나이별 월 지원금·첫만남이용권 | 라떼타임 계산기</title>
+<meta name="description" content="자녀 생년월일과 사는 지역을 넣으면 이번 달 부모급여와 아동수당, 앞으로 받을 예상 총액, 첫만남이용권 금액을 계산합니다. 2026년 만 9세 미만 아동수당 확대를 반영했습니다.">
+<link rel="canonical" href="https://latte-time.github.io/child-benefit.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="부모급여·아동수당 계산기 – 2026 자녀 나이별 월 지원금·첫만남이용권">
+<meta property="og:description" content="자녀 생년월일과 사는 지역을 넣으면 이번 달 부모급여와 아동수당, 앞으로 받을 예상 총액, 첫만남이용권 금액을 계산합니다. 2026년 만 9세 미만 아동수당 확대를 반영했습니다.">
+<meta property="og:url" content="https://latte-time.github.io/child-benefit.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="benefit.html">지원금·혜택</a> › 부모급여·아동수당</nav>
+</div></header>
+<main class="wrap">
+  <h1>부모급여·아동수당 계산기</h1>
+  <p class="lead">아이 생년월일과 사는 지역만 넣으면 매달 받는 지원금을 계산합니다.</p>
+  <section class="calc" aria-label="부모급여·아동수당 계산">
+<div class="two"><div class="row"><label class="label" for="birth">자녀 생년월일</label><div class="money"><input type="date" id="birth" min="2016-01-01"></div></div><div class="row"><label class="label" for="base">기준일</label><div class="money"><input type="date" id="base"></div></div></div>
+<div class="row"><label class="label" for="region">사는 지역 (아동수당)</label><div class="money"><select id="region"><option value="metro">수도권 (서울·경기·인천)</option><option value="nonmetro">비수도권</option><option value="dec1">인구감소지역 (우대지원)</option><option value="dec2">인구감소지역 (특별지원)</option></select></div></div>
+<div class="row"><label class="check" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="voucher"> 인구감소지역 추가분을 지역사랑상품권으로 받기 (+1만 원)</label></div>
+<div class="row"><label class="check" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="daycare"> 어린이집 다님</label></div>
+<div class="row"><span class="label">출생 순서 (첫만남이용권)</span><div class="seg" role="radiogroup"><input type="radio" name="order" id="order-0" value="1" checked><label for="order-0">첫째</label><input type="radio" name="order" id="order-1" value="2"><label for="order-1">둘째 이상</label></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>2026년 부모급여·아동수당·첫만남이용권</h2>
+    <table class="rate">
+      <thead><tr><th>제도</th><th>대상</th><th>금액</th></tr></thead>
+      <tbody>
+        <tr><td>부모급여</td><td>0세 (0~11개월)</td><td>월 100만 원</td></tr>
+        <tr><td>부모급여</td><td>1세 (12~23개월)</td><td>월 50만 원</td></tr>
+        <tr><td>아동수당</td><td>만 9세 미만 (0~107개월)</td><td>월 10만 원 (지역별 추가)</td></tr>
+        <tr><td>첫만남이용권</td><td>출생아 (1회)</td><td>첫째 200만 원, 둘째 이상 300만 원</td></tr>
+      </tbody>
+    </table>
+    <h3>아동수당 지역별 금액</h3>
+    <table class="rate">
+      <thead><tr><th>지역</th><th>월 금액</th></tr></thead>
+      <tbody>
+        <tr><td>수도권</td><td>10만 원</td></tr>
+        <tr><td>비수도권</td><td>10만 5천 원</td></tr>
+        <tr><td>인구감소지역 우대지원</td><td>11만 원 (지역사랑상품권 선택 시 12만 원)</td></tr>
+        <tr><td>인구감소지역 특별지원</td><td>12만 원 (지역사랑상품권 선택 시 13만 원)</td></tr>
+      </tbody>
+    </table>
+    <p>세 제도 모두 소득·재산과 관계없이 받을 수 있고, 함께 받을 수 있습니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>생후 5개월, 수도권, 가정 양육</b><br>부모급여 100만 원 + 아동수당 10만 원 = 매달 <b>110만 원</b></div>
+    <div class="ex"><b>생후 18개월, 비수도권</b><br>부모급여 50만 원 + 아동수당 10만 5천 원 = 매달 <b>60만 5천 원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>어떻게 신청하나요?</summary><p>출생신고를 할 때 행복출산 원스톱 서비스로 부모급여, 아동수당, 첫만남이용권을 한 번에 신청할 수 있습니다. 복지로나 주민센터에서도 신청할 수 있습니다.</p></details>
+    <details><summary>늦게 신청하면 못 받나요?</summary><p>부모급여·아동수당은 출생일로부터 60일 안에 신청해야 태어난 달부터 소급해 받을 수 있습니다. 그 뒤에 신청하면 신청한 달부터 받습니다.</p></details>
+    <details><summary>첫만남이용권은 언제까지 써야 하나요?</summary><p>국민행복카드 포인트로 받으며, 2024년 이후 출생아는 출생일로부터 2년 안에 사용해야 합니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="eitc.html">근로장려금 계산기</a><a href="age.html">만 나이 계산기</a><a href="dday.html">D-day 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>아동수당법(2026년 만 9세 미만 확대), 영유아보육법·아동수당법 시행규칙(부모급여), 저출산·고령사회기본법(첫만남이용권). 보건복지부 2026년 지역별 아동수당 안내.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 지급액은 신청 시점, 어린이집 이용 여부, 지자체 기준에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var CHILD = {metro: 100000, nonmetro: 105000, dec1: 110000, dec2: 120000};
+function ageMonths(birthStr, baseStr){
+  var b = birthStr.split('-').map(Number), t = baseStr.split('-').map(Number);
+  var m = (t[0]-b[0])*12 + (t[1]-b[1]); if (t[2] < b[2]) m--; return m;
+}
+function childBenefit(birthStr, baseStr, region, voucher){
+  var m = ageMonths(birthStr, baseStr);
+  var parent = m < 0 ? 0 : (m < 12 ? 1000000 : (m < 24 ? 500000 : 0));
+  var childAmt = CHILD[region] + ((voucher && (region === 'dec1' || region === 'dec2')) ? 10000 : 0);
+  var child = (m >= 0 && m < 108) ? childAmt : 0;
+  var remainParent = 0, remainChild = 0;
+  for (var k = Math.max(m, 0); k < 108; k++){
+    if (k < 12) remainParent += 1000000; else if (k < 24) remainParent += 500000;
+    remainChild += childAmt;
+  }
+  return {months: m, parent: parent, child: child, monthly: parent + child, remainParent: remainParent, remainChild: remainChild};
+}
+// CALC-END
+
+(function(){ var d=new Date(); $('base').value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })();
+function render(){
+  var b = $('birth').value, t = $('base').value;
+  if(!b || !t){ empty('자녀 생년월일을 고르면 결과가 여기에 나옵니다.'); return; }
+  if(b > t){ empty('생년월일이 기준일보다 늦습니다. 출산 예정이라면 예정일 이후 날짜를 기준일로 넣어 보세요.'); return; }
+  var r = childBenefit(b, t, $('region').value, $('voucher').checked);
+  var first = val('order') === '2' ? 3000000 : 2000000;
+  var list = [['자녀 나이', r.months + '개월 (만 ' + Math.floor(r.months/12) + '세)'],
+              ['부모급여', won(r.parent) + (r.parent && $('daycare').checked ? ' (보육료 차감 전)' : '')],
+              ['아동수당', won(r.child)],
+              ['앞으로 받을 부모급여 (오늘 기준)', won(r.remainParent)],
+              ['앞으로 받을 아동수당 (만 9세 미만까지)', won(r.remainChild)],
+              ['첫만남이용권 (출생 시 1회)', won(first)]];
+  var note = ($('daycare').checked && r.parent ? '어린이집을 다니면 부모급여에서 보육료 바우처만큼을 빼고 남은 금액만 현금으로 받습니다. ' : '') +
+             '현재 제도가 유지된다고 가정한 금액입니다. 아동수당 대상 연령은 앞으로 단계적으로 넓어질 예정입니다.';
+  show('이번 달 받는 지원금', won(r.monthly), list, note);
+}
+bind();
+</script>
+</body>
+</html>

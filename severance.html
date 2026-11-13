@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>퇴직금 계산기 – 평균임금 기준 예상 퇴직금 (재직일수·상여금 반영) | 라떼타임 계산기</title>
+<meta name="description" content="입사일, 퇴사일, 최근 3개월 급여를 넣으면 1일 평균임금과 예상 퇴직금을 계산합니다. 연간 상여금과 연차수당도 반영할 수 있습니다.">
+<link rel="canonical" href="https://latte-time.github.io/severance.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="퇴직금 계산기 – 평균임금 기준 예상 퇴직금 (재직일수·상여금 반영)">
+<meta property="og:description" content="입사일, 퇴사일, 최근 3개월 급여를 넣으면 1일 평균임금과 예상 퇴직금을 계산합니다. 연간 상여금과 연차수당도 반영할 수 있습니다.">
+<meta property="og:url" content="https://latte-time.github.io/severance.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="salary.html">급여·근로</a> › 퇴직금</nav>
+</div></header>
+<main class="wrap">
+  <h1>퇴직금 계산기</h1>
+  <p class="lead">입사일과 퇴사일, 월급만 넣으면 법정 퇴직금을 계산합니다.</p>
+  <section class="calc" aria-label="퇴직금 계산">
+<div class="two"><div class="row"><label class="label" for="start">입사일</label><div class="money"><input type="date" id="start"></div></div><div class="row"><label class="label" for="end">퇴사일 <small>(마지막 근무일 다음 날)</small></label><div class="money"><input type="date" id="end"></div></div></div>
+<div class="row"><label class="label" for="pay">최근 3개월 월 평균 급여 (세전)</label><div class="money"><input id="pay" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 3,000,000"><span>원</span></div><div class="hint">기본급과 매달 받는 수당을 합친 금액</div></div>
+<div class="two"><div class="row"><label class="label" for="bonus">연간 상여금 <small>(선택)</small></label><div class="money"><input id="bonus" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 3,000,000"><span>원</span></div></div><div class="row"><label class="label" for="leave">연차수당 <small>(선택)</small></label><div class="money"><input id="leave" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 500,000"><span>원</span></div><div class="hint">퇴사 전 1년간 받은 금액</div></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>퇴직금 계산 방법</h2>
+    <p>1년 이상 일하고, 1주 평균 15시간 이상 근무했다면 퇴직금을 받을 수 있습니다.</p>
+    <table class="rate"><tbody>
+      <tr><th>1일 평균임금</th><td>퇴사 전 3개월 임금 총액 ÷ 그 3개월의 총 일수</td></tr>
+      <tr><th>퇴직금</th><td>1일 평균임금 × 30일 × (재직일수 ÷ 365)</td></tr>
+    </tbody></table>
+    <p>연간 상여금과 연차수당은 3/12만큼을 3개월 임금 총액에 더합니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>2023년 3월 1일 입사, 2026년 3월 1일 퇴사(마지막 근무 2월 28일), 월급 300만 원</b><br>재직 1,096일, 3개월 임금 900만 원 ÷ 90일 = 1일 평균임금 10만 원<br>10만 원 × 30 × 1,096 ÷ 365 = <b>9,008,219원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>퇴사일은 언제로 넣나요?</summary><p>마지막으로 근무한 날의 다음 날을 넣습니다. 2월 28일까지 일했다면 퇴사일은 3월 1일입니다.</p></details>
+    <details><summary>퇴직금은 언제까지 받아야 하나요?</summary><p>퇴사일로부터 14일 안에 지급해야 합니다. 당사자끼리 합의하면 기간을 늦출 수 있습니다.</p></details>
+    <details><summary>퇴직연금(DC형)도 이렇게 계산하나요?</summary><p>확정기여형(DC)은 회사가 매년 연봉의 1/12 이상을 적립하고, 운용 수익에 따라 받는 금액이 달라집니다. 이 계산기는 퇴직금제도와 확정급여형(DB) 기준입니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="juhyu.html">주휴수당 계산기</a><a href="labor-cost.html">인건비 계산기</a><a href="deposit-interest.html">예적금 이자 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>근로자퇴직급여 보장법 제8조(퇴직금 = 계속근로기간 1년에 30일분 이상의 평균임금), 제9조(14일 이내 지급). 근로기준법 제2조 제1항 제6호(평균임금 정의).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 금액은 개별 조건에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function dnum(y,m,d){ return Date.UTC(y,m-1,d)/86400000; }
+function pd(s){ return s.split('-').map(Number); }
+function severanceCalc(startStr, endStr, monthlyPay, bonusYear, leavePay){
+  var a = pd(startStr), b = pd(endStr);
+  var days = dnum(b[0],b[1],b[2]) - dnum(a[0],a[1],a[2]);
+  var y = b[0], m = b[1] - 3; if (m <= 0){ m += 12; y--; }
+  var last = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  var d = Math.min(b[2], last);
+  var periodDays = dnum(b[0],b[1],b[2]) - dnum(y,m,d);
+  var wage3 = monthlyPay * 3 + bonusYear * 3 / 12 + leavePay * 3 / 12;
+  var avgDaily = wage3 / periodDays;
+  var sev = avgDaily * 30 * days / 365;
+  return {days: days, eligible: days >= 365, periodDays: periodDays, wage3: wage3, avgDaily: avgDaily, severance: days >= 365 ? sev : 0, years: days / 365};
+}
+// CALC-END
+
+function render(){
+  var s = $('start').value, e = $('end').value, pay = num('pay');
+  if(!s || !e || !pay){ empty('입사일, 퇴사일, 월 급여를 입력하면 결과가 여기에 나옵니다.'); return; }
+  if(e <= s){ empty('퇴사일이 입사일보다 늦어야 합니다.'); return; }
+  var r = severanceCalc(s, e, pay, num('bonus'), num('leave'));
+  var list = [['재직일수', r.days.toLocaleString('ko-KR') + '일 (약 ' + r.years.toFixed(1) + '년)'],
+              ['3개월 임금 총액', won(r.wage3)], ['3개월 기간 일수', r.periodDays + '일'], ['1일 평균임금', won(r.avgDaily)]];
+  if(!r.eligible){ show('예상 퇴직금', '0원', list, '재직 기간이 1년 미만이면 법정 퇴직금이 없습니다.'); return; }
+  show('예상 퇴직금 (세전)', won(r.severance), list, '퇴직소득세는 빼지 않은 금액입니다. 평균임금이 통상임금보다 적으면 통상임금으로 계산합니다.');
+}
+bind();
+</script>
+</body>
+</html>

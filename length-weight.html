@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단위 변환기 – 길이(cm·인치·피트)·무게(kg·파운드·근·돈) 변환 | 라떼타임 계산기</title>
+<meta name="description" content="cm, m, 인치, 피트, 야드, 마일 같은 길이 단위와 g, kg, 파운드, 온스, 근, 돈 같은 무게 단위를 서로 바꿔 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/length-weight.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="단위 변환기 – 길이(cm·인치·피트)·무게(kg·파운드·근·돈) 변환">
+<meta property="og:description" content="cm, m, 인치, 피트, 야드, 마일 같은 길이 단위와 g, kg, 파운드, 온스, 근, 돈 같은 무게 단위를 서로 바꿔 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/length-weight.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="unit.html">단위 변환</a> › 길이·무게 변환</nav>
+</div></header>
+<main class="wrap">
+  <h1>길이·무게 단위 변환기</h1>
+  <p class="lead">값과 단위를 고르면 다른 단위로 한꺼번에 바꿔 줍니다.</p>
+  <section class="calc" aria-label="길이·무게 변환 계산">
+<div class="row"><span class="label">종류</span><div class="seg" role="radiogroup"><input type="radio" name="kind" id="kind-0" value="len" checked><label for="kind-0">길이</label><input type="radio" name="kind" id="kind-1" value="wt"><label for="kind-1">무게</label></div></div>
+<div class="two"><div class="row"><label class="label" for="v">값</label><div class="money"><input id="v" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 170"><span></span></div></div><div class="row"><label class="label" for="unit">단위</label><div class="money"><select id="unit"></select></div></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>자주 쓰는 단위 기준</h2>
+    <table class="rate">
+      <thead><tr><th>단위</th><th>기준값</th></tr></thead>
+      <tbody>
+        <tr><td>1인치</td><td>2.54cm</td></tr>
+        <tr><td>1피트</td><td>30.48cm (12인치)</td></tr>
+        <tr><td>1마일</td><td>1.609344km</td></tr>
+        <tr><td>1파운드</td><td>453.59237g</td></tr>
+        <tr><td>1온스</td><td>28.3495g</td></tr>
+        <tr><td>1돈</td><td>3.75g</td></tr>
+        <tr><td>1근</td><td>고기 600g, 채소·과일 375g</td></tr>
+      </tbody>
+    </table>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>키 170cm</b> = 약 <b>5피트 7인치</b> (66.93인치)</div>
+    <div class="ex"><b>금 1돈</b> = <b>3.75g</b>, 10돈 = 37.5g</div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>TV·모니터 인치는 무엇을 잰 건가요?</summary><p>화면 대각선 길이입니다. 65인치 TV는 대각선이 약 165cm입니다.</p></details>
+    <details><summary>근은 왜 두 가지인가요?</summary><p>관습적으로 고기는 1근을 600g, 채소·과일은 375g으로 거래합니다. 공식 단위가 아니어서 가게마다 다를 수 있습니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="pyeong.html">평수 변환</a><a href="age.html">만 나이 계산기</a><a href="dday.html">D-day 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>국제 단위 정의(1인치 = 2.54cm, 1파운드 = 0.45359237kg). 돈·근은 관습 단위 기준값입니다.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 금액은 개별 조건에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var UNITS = {
+  len: [['mm',0.001],['cm',0.01],['m',1],['km',1000],['인치(in)',0.0254],['피트(ft)',0.3048],['야드(yd)',0.9144],['마일(mi)',1609.344]],
+  wt:  [['g',1],['kg',1000],['톤(t)',1000000],['온스(oz)',28.349523125],['파운드(lb)',453.59237],['돈',3.75],['근(고기 600g)',600],['근(채소 375g)',375]]
+};
+function convertAll(kind, value, unitName){
+  var list = UNITS[kind], base = 0;
+  list.forEach(function(u){ if (u[0] === unitName) base = value * u[1]; });
+  return list.map(function(u){ return [u[0], base / u[1]]; });
+}
+// CALC-END
+
+function fillUnits(){ var k = val('kind'), sel = $('unit'), keep = sel.value; sel.innerHTML = UNITS[k].map(function(u){ return '<option>'+u[0]+'</option>'; }).join(''); sel.value = (k==='len')?'cm':'kg'; }
+document.querySelectorAll('input[name=kind]').forEach(function(el){ el.addEventListener('change', fillUnits); });
+fillUnits();
+function fmt(x){ if (x === 0) return '0'; var a = Math.abs(x); return a >= 1000 ? x.toLocaleString('ko-KR', {maximumFractionDigits: 2}) : (a >= 1 ? x.toLocaleString('ko-KR', {maximumFractionDigits: 4}) : x.toPrecision(4)); }
+function render(){
+  if(!$('unit').options.length) return;
+  var v = num('v'), u = $('unit').value;
+  if(!v){ empty('값을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var r = convertAll(val('kind'), v, u);
+  show(v + ' ' + u + ' 은(는)', '', r.filter(function(x){ return x[0] !== u; }).map(function(x){ return [x[0], fmt(x[1])]; }));
+}
+bind();
+</script>
+</body>
+</html>

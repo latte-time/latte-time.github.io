@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청약 가점 계산기 – 무주택기간·부양가족·통장 가입기간 84점 만점 | 라떼타임 계산기</title>
+<meta name="description" content="무주택 기간, 부양가족 수, 청약통장 가입 기간을 넣으면 민영주택 청약 가점(84점 만점)을 계산합니다. 2024년 3월부터 반영되는 배우자 통장 가입기간 50%(최대 3점)도 포함합니다.">
+<link rel="canonical" href="https://latte-time.github.io/subscription-score.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="청약 가점 계산기 – 무주택기간·부양가족·통장 가입기간 84점 만점">
+<meta property="og:description" content="무주택 기간, 부양가족 수, 청약통장 가입 기간을 넣으면 민영주택 청약 가점(84점 만점)을 계산합니다. 2024년 3월부터 반영되는 배우자 통장 가입기간 50%(최대 3점)도 포함합니다.">
+<meta property="og:url" content="https://latte-time.github.io/subscription-score.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="realestate.html">부동산</a> › 청약 가점</nav>
+</div></header>
+<main class="wrap">
+  <h1>청약 가점 계산기 (84점 만점)</h1>
+  <p class="lead">세 가지 항목만 넣으면 내 청약 가점이 바로 나옵니다.</p>
+  <section class="calc" aria-label="청약 가점 계산">
+<div class="row"><label style="display:block"><input type="checkbox" id="own"> 지금 집이 있음 (무주택기간 0점)</label></div>
+<div class="row"><label class="label" for="nohome">무주택 기간</label><div class="money"><input id="nohome" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 7"><span>년</span></div><div class="hint">만 30세가 된 날과 혼인신고일 중 빠른 날부터 셉니다. 만 30세 미만 미혼은 0</div></div>
+<div class="row"><label class="label" for="fam">부양가족 수 (본인 제외)</label><div class="money"><input id="fam" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 3"><span>명</span></div><div class="hint">배우자, 자녀, 3년 이상 같은 등본의 부모 등</div></div>
+<div class="two"><div class="row"><label class="label" for="acc">내 청약통장 가입 기간</label><div class="money"><input id="acc" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 10"><span>년</span></div></div><div class="row"><label class="label" for="sacc">배우자 통장 가입 기간 <small>(선택)</small></label><div class="money"><input id="sacc" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 4"><span>년</span></div></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>청약 가점표</h2>
+    <table class="rate"><thead><tr><th>항목</th><th>점수</th><th>만점</th></tr></thead><tbody>
+      <tr><td>무주택 기간</td><td>1년 미만 2점, 1년마다 +2점</td><td>32점 (15년 이상)</td></tr>
+      <tr><td>부양가족 수</td><td>0명 5점, 1명마다 +5점</td><td>35점 (6명 이상)</td></tr>
+      <tr><td>청약통장 가입 기간</td><td>6개월 미만 1점, 6개월~1년 2점, 이후 1년마다 +1점</td><td>17점 (15년 이상)</td></tr>
+    </tbody></table>
+    <h3>배우자 통장 가입기간 합산</h3>
+    <p>민영주택 일반공급 가점제에서 배우자 통장 가입기간의 50%를 점수로 바꿔 최대 3점까지 더합니다. 본인 점수와 합쳐 17점을 넘을 수 없습니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>무주택 7년, 부양가족 3명, 통장 10년</b><br>16점 + 20점 + 12점 = <b>48점</b></div>
+    <div class="ex"><b>위 조건 + 배우자 통장 4년</b><br>배우자 몫 3점 → <b>51점</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>부모님도 부양가족이 되나요?</summary><p>3년 이상 같은 주민등록표에 있으면 됩니다. 부모님이 집이 있으면 원칙적으로 안 되지만, 만 60세 이상 부모님의 주택은 무주택으로 보는 예외가 있습니다.</p></details>
+    <details><summary>가점을 잘못 넣으면요?</summary><p>당첨 후 부적격 판정을 받으면 당첨이 취소되고 일정 기간 청약이 제한됩니다. 공고문 기준일로 다시 계산하세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="loan-limit.html">주담대 한도 계산기</a><a href="acq-tax.html">취득세 계산기</a><a href="jungaebosu.html">중개보수 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>주택공급에 관한 규칙 제28조, 별표 1(가점제 적용기준: 무주택기간 32점, 부양가족 35점, 입주자저축 가입기간 17점, 배우자 가입기간 50%·최대 3점 합산, 2024.3.25 시행).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 무주택 기간 기산일, 부양가족 인정 여부, 소형·저가주택 특례는 공고문과 청약홈 기준을 따르세요. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function noHomeScore(y, own){ if (own) return 0; return Math.min(32, 2 + 2 * Math.floor(y)); }
+function famScore(n){ return Math.min(35, 5 + 5 * Math.floor(n)); }
+function accScore(y){ if (y < 0.5) return 1; if (y < 1) return 2; return Math.min(17, 2 + Math.floor(y)); }
+function subScore(o){
+  var a = noHomeScore(o.nohome, o.own), b = famScore(o.fam), c = accScore(o.acc);
+  var s = o.sacc > 0 ? Math.min(3, accScore(o.sacc / 2)) : 0;
+  var cTotal = Math.min(17, c + s);
+  return {a: a, b: b, c: c, s: cTotal - c, total: a + b + cTotal};
+}
+// CALC-END
+
+function render(){
+  var own=$('own').checked;
+  var filled = $('nohome').value || $('fam').value || $('acc').value || own;
+  if(!filled){ empty('항목을 입력하면 가점이 나옵니다.'); return; }
+  var r=subScore({nohome:num('nohome'), own:own, fam:num('fam'), acc:num('acc'), sacc:num('sacc')});
+  show('내 청약 가점', r.total+'점 / 84점', [
+    ['무주택 기간', r.a+'점 / 32'],['부양가족', r.b+'점 / 35'],['청약통장 가입 기간', r.c+'점 / 17'],['배우자 통장 합산', r.s+'점 (최대 3)']
+  ], '실제 점수는 입주자모집공고일 기준으로 청약홈에서 다시 확인하세요. 부적격 판정을 받으면 당첨이 취소되고 일정 기간 청약이 제한됩니다.');
+}
+bind();
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대출 이자 계산기 – 원리금균등·원금균등·만기일시 월 상환액 | 라떼타임 계산기</title>
+<meta name="description" content="대출금, 금리, 기간을 넣으면 원리금균등·원금균등·만기일시상환 방식별 월 상환액과 총이자, 회차별 상환표를 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/loan-repay.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="대출 이자 계산기 – 원리금균등·원금균등·만기일시 월 상환액">
+<meta property="og:description" content="대출금, 금리, 기간을 넣으면 원리금균등·원금균등·만기일시상환 방식별 월 상환액과 총이자, 회차별 상환표를 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/loan-repay.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="loan.html">대출·금융</a> › 대출 원리금</nav>
+</div></header>
+<main class="wrap">
+  <h1>대출 원리금 계산기 (대출 이자 계산)</h1>
+  <p class="lead">대출금과 금리, 기간을 넣으면 매달 갚을 돈과 전체 이자를 상환 방식별로 계산합니다.</p>
+  <section class="calc" aria-label="대출 원리금 계산">
+<div class="row"><span class="label">상환 방식</span><div class="seg" role="radiogroup"><input type="radio" name="method" id="method-0" value="annuity" checked><label for="method-0">원리금균등</label><input type="radio" name="method" id="method-1" value="principal"><label for="method-1">원금균등</label><input type="radio" name="method" id="method-2" value="bullet"><label for="method-2">만기일시</label></div></div>
+<div class="row"><label class="label" for="amount">대출금</label><div class="money"><input id="amount" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 10,000"><span>만원</span></div></div>
+<div class="two"><div class="row"><label class="label" for="rate">연 금리</label><div class="money"><input id="rate" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 4.0"><span>%</span></div></div><div class="row"><label class="label" for="years">대출 기간</label><div class="money"><input id="years" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 30"><span>년</span></div></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>상환 방식별 차이</h2>
+    <table class="rate">
+      <thead><tr><th>방식</th><th>매달 내는 돈</th><th>총 이자</th></tr></thead>
+      <tbody>
+        <tr><td>원리금균등</td><td>매달 같은 금액 (원금+이자)</td><td>중간</td></tr>
+        <tr><td>원금균등</td><td>처음에 가장 많고 매달 줄어듦</td><td>가장 적음</td></tr>
+        <tr><td>만기일시</td><td>매달 이자만, 마지막에 원금 전부</td><td>가장 많음</td></tr>
+      </tbody>
+    </table>
+    <h3>계산식</h3>
+    <p>원리금균등 월 상환액 = 대출금 × 월이율 ÷ (1 − (1 + 월이율)<sup>−개월 수</sup>). 월이율은 연 금리 ÷ 12입니다.</p>
+    <p>원금균등은 매달 원금을 대출금 ÷ 개월 수만큼 갚고, 이자는 남은 원금 × 월이율로 계산합니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>1억 원 · 연 4% · 30년 · 원리금균등</b><br>매달 <b>477,415원</b>, 총 이자 약 7,187만 원</div>
+    <div class="ex"><b>1억 원 · 연 4% · 30년 · 원금균등</b><br>첫 달 <b>611,111원</b> → 마지막 달 278,704원, 총 이자 약 6,017만 원</div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>어떤 방식이 유리한가요?</summary><p>총 이자만 보면 원금균등이 가장 적습니다. 다만 처음 몇 년 동안 매달 내는 돈이 커서, 매달 부담을 일정하게 하려면 원리금균등을 많이 고릅니다.</p></details>
+    <details><summary>은행 상환액과 조금 다른 이유는요?</summary><p>은행은 실제 일수(30일·31일)로 이자를 계산하거나 거치기간·변동금리를 적용하기도 합니다. 이 계산기는 매달 같은 월이율로 계산합니다.</p></details>
+    <details><summary>중도에 갚으면 어떻게 되나요?</summary><p>원금을 미리 갚으면 남은 이자가 줄어듭니다. 대신 대출 상품에 따라 중도상환수수료가 붙을 수 있습니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="deposit-interest.html">예적금 이자 계산기</a><a href="rent-yield.html">임대수익률 계산기</a><a href="jungaebosu.html">중개보수 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>원리금균등·원금균등·만기일시상환은 금융권에서 쓰는 표준 상환 방식 계산식을 따랐습니다.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 상환액은 금융기관의 이자 계산 방식, 거치기간, 변동금리 적용에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function loanSchedule(P, annualRate, months, method){
+  var r = annualRate / 100 / 12, list = [], bal = P, totalInt = 0, pay;
+  if (method === 'annuity') pay = r === 0 ? P / months : P * r / (1 - Math.pow(1 + r, -months));
+  for (var k = 1; k <= months; k++){
+    var interest = bal * r, principal;
+    if (method === 'annuity') principal = pay - interest;
+    else if (method === 'principal') principal = P / months;
+    else principal = (k === months) ? bal : 0;
+    if (k === months) principal = bal;
+    var p = principal + interest;
+    bal = bal - principal;
+    totalInt += interest;
+    list.push({k: k, pay: p, principal: principal, interest: interest, balance: Math.max(0, bal)});
+  }
+  return {list: list, totalInterest: totalInt, total: P + totalInt, first: list[0], last: list[list.length-1]};
+}
+// CALC-END
+
+function render(){
+  var P = num('amount') * 10000, rate = num('rate'), months = Math.round(num('years') * 12), m = val('method');
+  if(!P || !months){ empty('대출금과 기간을 입력하면 결과가 여기에 나옵니다.'); return; }
+  if(months > 600){ empty('대출 기간은 50년 이하로 입력하세요.'); return; }
+  var s = loanSchedule(P, rate, months, m);
+  var big = m === 'principal' ? '첫 달 ' + won(s.first.pay) : (m === 'bullet' ? '매달 ' + won(s.first.pay) : '매달 ' + won(s.first.pay));
+  var list = [['대출금', man(P)], ['총 이자', won(s.totalInterest)], ['총 상환액', won(s.total)]];
+  if (m === 'principal') list.splice(1, 0, ['마지막 달 상환액', won(s.last.pay)]);
+  if (m === 'bullet') list.splice(1, 0, ['마지막 달 (원금 포함)', won(s.last.pay)]);
+  var label = {annuity:'월 상환액 (원리금균등)', principal:'월 상환액 (원금균등, 매달 줄어듦)', bullet:'월 이자 (만기일시)'}[m];
+  show(label, big, list, '1원 단위는 반올림해 표시합니다. 실제 은행 상환액은 일수 계산 방식에 따라 조금 다를 수 있습니다.');
+  var rowsHtml = s.list.map(function(x){ return '<tr><td>'+x.k+'</td><td>'+won(x.pay)+'</td><td>'+won(x.principal)+'</td><td>'+won(x.interest)+'</td><td>'+won(x.balance)+'</td></tr>'; }).join('');
+  $('result').innerHTML += '<div class="sched"><table><thead><tr><th>회차</th><th>상환액</th><th>원금</th><th>이자</th><th>잔액</th></tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
+}
+bind();
+</script>
+</body>
+</html>
