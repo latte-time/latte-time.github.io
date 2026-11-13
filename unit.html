@@ -79,6 +79,11 @@ section.about{background:var(--cream);border:1px solid var(--line);border-radius
 section.about h2{font-size:19px;margin:0 0 8px}
 section.about p{margin:6px 0}
 h2.sub{font-size:17px;margin:26px 0 10px;color:var(--brand);letter-spacing:-.3px}
+section.guide h3{font-size:16px;margin:16px 0 6px}
+section.guide p,section.guide li{font-size:15px;line-height:1.75;color:var(--ink)}
+section.guide ul,section.guide ol{padding-left:20px;margin:6px 0 10px}
+section.guide li{margin:4px 0}
+section.guide a{color:var(--accent)}
 p.note{margin:18px 0 0;font-size:14.5px;color:var(--muted);background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
 .others{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .others a{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;text-decoration:none;color:var(--ink);font-size:14.5px}
@@ -139,6 +144,12 @@ footer{border-top:1px solid var(--line);padding:22px 0;font-size:13px;color:var(
   <p class="lead">평수와 ㎡, 길이와 무게 단위를 바로 바꿔 줍니다.</p>
   <div class="grid"><a class="card" href="pyeong.html"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span><span><h3>평수 변환<span class="sfx"> 계산기</span><span class="tag new">NEW</span></h3><p>평 ↔ ㎡</p></span></a><a class="card" href="length-weight.html"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 15l12-12 6 6-12 12z"/><path d="M7 11l2 2M10 8l2 2M13 5l2 2"/></svg></span><span><h3>길이·무게<span class="sfx"> 계산기</span><span class="tag new">NEW</span></h3><p>cm·inch·kg·lb 등</p></span></a></div>
   
+  <section class="block guide"><h2><span class="dot"></span>단위 변환 계산기 안내</h2><h3>단위 변환 기준</h3>
+<ul>
+<li><b>1평 = 약 3.3058㎡</b>입니다(400/121㎡). 거래·등기에는 ㎡가 법정 단위라 계약서와 공고문은 ㎡로 적혀 있습니다.</li>
+<li><b>아파트 평형</b> "34평형"은 보통 공급면적 기준이고, 실제로 쓰는 전용면적은 84㎡(약 25.4평)입니다. 평형 숫자만 보고 실평수를 짐작하지 말고 ㎡를 평으로 바꿔 확인하세요.</li>
+<li><b>길이·무게</b> 1인치 2.54cm, 1파운드 453.59237g 같은 국제 정의값을 씁니다. 돈·근 같은 관습 단위는 일반적으로 쓰는 기준값입니다.</li>
+</ul></section>
   <section class="block">
     <h2><span class="dot"></span>다른 분야</h2>
     <div class="others"><a href="tax.html">세금</a><a href="realestate.html">부동산</a><a href="benefit.html">지원금·혜택</a><a href="salary.html">급여·근로</a><a href="loan.html">대출·금융</a><a href="business.html">사업자</a><a href="date.html">날짜·나이</a></div>
