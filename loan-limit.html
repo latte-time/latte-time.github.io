@@ -89,7 +89,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size
 <div class="two"><div class="row"><label class="label" for="price">집값 (시세·감정가)</label><div class="money"><input id="price" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 80,000"><span>만원</span></div></div><div class="row"><label class="label" for="inc">연소득 (세전)</label><div class="money"><input id="inc" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 7,000"><span>만원</span></div></div></div>
 <div class="two"><div class="row"><label class="label" for="rate">대출 금리</label><div class="money"><input id="rate" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 4.2"><span>%</span></div></div><div class="row"><label class="label" for="debt">기존 대출 연 원리금 <small>(선택)</small></label><div class="money"><input id="debt" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 0"><span>만원</span></div><div class="hint">신용대출·자동차 할부 등 1년 상환액</div></div></div>
 <div class="row"><span class="label">만기</span><div class="seg" role="radiogroup"><input type="radio" name="term" id="term-0" value="30" checked><label for="term-0">30년</label><input type="radio" name="term" id="term-1" value="40"><label for="term-1">40년</label></div></div>
-<div class="row"><span class="label">집이 있는 곳</span><div class="seg" role="radiogroup"><input type="radio" name="area" id="area-0" value="reg" checked><label for="area-0">규제지역 (서울·경기 12곳 등)</label><input type="radio" name="area" id="area-1" value="cap"><label for="area-1">비규제 수도권</label><input type="radio" name="area" id="area-2" value="local"><label for="area-2">지방</label></div></div>
+<div class="row"><span class="label">집이 있는 곳</span><div class="seg" role="radiogroup"><input type="radio" name="area" id="area-0" value="reg" checked><label for="area-0">규제지역 (서울·경기 15곳)</label><input type="radio" name="area" id="area-1" value="cap"><label for="area-1">비규제 수도권</label><input type="radio" name="area" id="area-2" value="local"><label for="area-2">지방</label></div></div>
 <div class="row"><span class="label">나는</span><div class="seg" role="radiogroup"><input type="radio" name="who" id="who-0" value="none" checked><label for="who-0">무주택</label><input type="radio" name="who" id="who-1" value="first"><label for="who-1">생애최초 구입</label><input type="radio" name="who" id="who-2" value="one"><label for="who-2">1주택 (기존 집 처분 조건)</label><input type="radio" name="who" id="who-3" value="multi"><label for="who-3">2주택 이상</label></div></div>
     <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
   </section>
@@ -107,7 +107,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size
       <tr><td>생애최초</td><td>70%</td><td>70%</td><td>80%</td></tr>
       <tr><td>2주택 이상 추가 구입</td><td>0%</td><td>0%</td><td>60%</td></tr>
     </tbody></table>
-    <p>규제지역은 서울 25개구 전역과 경기 과천·광명·성남(분당·수정·중원)·수원(영통·장안·팔달)·안양 동안·용인 수지·의왕·하남이며, 이후 추가 지정된 곳이 있을 수 있습니다.</p>
+    <p>규제지역은 서울 25개구 전역과 경기 과천·광명·성남(분당·수정·중원)·수원(영통·장안·팔달)·안양 동안·용인 수지·의왕·하남, 그리고 2026년 7월 1일 추가된 화성 동탄구·용인 기흥구·구리시입니다(2026년 11월 기준).</p>
     <h3>스트레스 DSR</h3>
     <p>DSR을 계산할 때 실제 금리에 스트레스 금리를 더해 한도를 줄입니다. 수도권·규제지역 주담대는 하한 3%를 적용합니다. 지방은 이 계산기에서 0.75%로 가정했으니 은행에 확인하세요.</p>
     <h2>계산 예시</h2>
