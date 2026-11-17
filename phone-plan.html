@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공시지원금 vs 선택약정 계산기 – 휴대폰 24개월 총비용 비교 (요금 25% 할인) | 라떼타임 계산기</title>
+<meta name="description" content="휴대폰 출고가, 공시지원금, 추가지원금, 월 요금제, 할부 개월과 할부수수료율을 넣으면 공시지원금과 선택약정(요금 25% 할인) 중 2년간 총비용이 적은 쪽을 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/phone-plan.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="공시지원금 vs 선택약정 계산기 – 휴대폰 24개월 총비용 비교 (요금 25% 할인)">
+<meta property="og:description" content="휴대폰 출고가, 공시지원금, 추가지원금, 월 요금제, 할부 개월과 할부수수료율을 넣으면 공시지원금과 선택약정(요금 25% 할인) 중 2년간 총비용이 적은 쪽을 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/phone-plan.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="shopping.html">소비·쇼핑</a> › 휴대폰 선택약정</nav>
+</div></header>
+<main class="wrap">
+  <h1>공시지원금 vs 선택약정 계산기</h1>
+  <p class="lead">새 휴대폰을 살 때 기기값 할인(공시지원금)과 요금 25% 할인(선택약정) 중 어느 쪽이 싼지 계산합니다.</p>
+  <section class="calc" aria-label="휴대폰 선택약정 계산">
+<div class="row"><label class="label" for="price">휴대폰 출고가</label><div class="money"><input id="price" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 1,550,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="sub">공시지원금</label><div class="money"><input id="sub" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 500,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="extra">추가지원금 (유통점)</label><div class="money"><input id="extra" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 75,000"><span>원</span></div><div class="hint">2025년 7월 단통법 폐지로 상한이 없어졌습니다. 매장 견적 금액을 넣으세요.</div></div>
+<div class="row"><label class="label" for="fee">월 요금제 (할인 전)</label><div class="money"><input id="fee" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 89,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="months">약정·할부 기간</label><div class="money"><select id="months"><option value="24" selected>24개월</option><option value="12">12개월</option><option value="36">36개월</option></select></div></div>
+<div class="row"><label class="label" for="rate">단말 할부수수료율 (연)</label><div class="money"><input id="rate" class="dec" inputmode="decimal" autocomplete="off" placeholder=""><span>%</span></div><div class="hint">통신 3사는 보통 연 5.9%. 일시불이면 0</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>두 방식 비교</h2>
+    <table class="rate"><thead><tr><th>구분</th><th>공시지원금</th><th>선택약정</th></tr></thead><tbody>
+      <tr><td>할인 대상</td><td>휴대폰 기기값</td><td>월 통신요금 25%</td></tr>
+      <tr><td>유리한 경우</td><td>지원금이 큰 신제품·고가 요금제</td><td>지원금이 적은 기기, 자급제폰</td></tr>
+      <tr><td>조건</td><td>요금제 유지 기간(보통 6개월 안팎)</td><td>12개월 또는 24개월 약정, 해지 시 할인 반환</td></tr>
+    </tbody></table>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>출고가 155만, 공시 50만 + 추가 7.5만, 요금 89,000원, 24개월, 할부 5.9%</b><br>공시: 기기 975,000 + 요금 2,136,000 + 이자 약 6만 → 약 317만 원<br>선택약정: 기기 155만 + 요금 1,602,000 + 이자 약 9.5만 → 약 325만 원 → <b>공시지원금이 약 8만 원 쌈</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>단통법이 폐지되면 선택약정도 없어지나요?</summary><p>아닙니다. 2025년 7월 22일 단말기유통법은 폐지됐지만 선택약정 25% 할인은 전기통신사업법으로 옮겨 그대로 유지됩니다.</p></details>
+    <details><summary>할부수수료 5.9%는 꼭 내야 하나요?</summary><p>통신사 할부를 쓰면 붙습니다. 일시불이나 무이자 카드 할부로 사면 수수료율을 0으로 두고 계산하세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="subscription.html">구독료 계산기</a><a href="installment.html">카드 할부 수수료 계산기</a><a href="discount.html">할인율·실구매가 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>전기통신사업법(선택약정 요금할인 25%, 2025.7.22 단말기유통법 폐지 후 이관), 원리금균등 상환 공식(단말 할부수수료).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 지원금은 통신사·매장·시기마다 다릅니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function phoneInstallFee(principal, months, rate){
+  // 원리금균등 상환 총이자 (월 이율 = 연 이율 ÷ 12)
+  if (!rate || !principal) return 0;
+  var i = rate / 100 / 12, pay = principal * i / (1 - Math.pow(1 + i, -months));
+  return Math.round(pay * months - principal);
+}
+function phonePlan(o){
+  var m = o.months;
+  var devA = Math.max(o.price - o.sub - o.extra, 0), feeA = o.fee * m, intA = phoneInstallFee(devA, m, o.rate);
+  var devB = o.price, feeB = (o.fee - Math.floor(o.fee * 0.25 / 10) * 10) * m, intB = phoneInstallFee(devB, m, o.rate);
+  var a = devA + feeA + intA, b = devB + feeB + intB;
+  return {devA: devA, feeA: feeA, intA: intA, totalA: a, devB: devB, feeB: feeB, intB: intB, totalB: b, diff: a - b,
+          monthA: Math.round(a / m), monthB: Math.round(b / m), discMonth: Math.floor(o.fee * 0.25 / 10) * 10};
+}
+// CALC-END
+
+function render(){
+  var p = num('price'), f = num('fee');
+  if (!p || !f){ empty('출고가와 월 요금제를 입력하면 결과가 여기에 나옵니다.'); return; }
+  var m = parseInt($('months').value,10), r = phonePlan({price:p, sub:num('sub'), extra:num('extra'), fee:f, months:m, rate:num('rate')});
+  var head = r.diff > 0 ? '선택약정이 ' + won(r.diff) + ' 쌉니다' : r.diff < 0 ? '공시지원금이 ' + won(-r.diff) + ' 쌉니다' : '총비용이 같습니다';
+  show(m + '개월 총비용 비교', head, [
+    ['공시지원금 총비용', won(r.totalA) + ' <span style="color:#888">(기기 ' + won(r.devA) + ' + 요금 ' + won(r.feeA) + ' + 할부이자 ' + won(r.intA) + ')</span>'],
+    ['선택약정 총비용', won(r.totalB) + ' <span style="color:#888">(기기 ' + won(r.devB) + ' + 요금 ' + won(r.feeB) + ' + 할부이자 ' + won(r.intB) + ')</span>'],
+    ['월 평균', '공시 ' + won(r.monthA) + ' / 선택약정 ' + won(r.monthB)], ['선택약정 월 할인', won(r.discMonth)]
+  ], '공시지원금은 보통 일정 기간 요금제 유지 조건이 붙습니다. 제휴카드 할인, 중고폰 보상, 부가서비스 조건은 넣지 않았습니다.');
+}
+bind();
+</script>
+</body>
+</html>

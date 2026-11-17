@@ -162,7 +162,7 @@ function bind(){
 
 // CALC-START
 
-function f10(x){ return Math.floor(x / 10) * 10; }
+function f10(x){ return Math.floor(x / 10 + 1e-7) * 10; }
 function baseRate(price){                       // 주택 유상취득 기본세율(%)
   if(price <= 6e8) return 1;
   if(price <= 9e8) return Math.round((price / 1e8 * 2 / 3 - 3) * 10000) / 10000;

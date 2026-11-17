@@ -158,7 +158,7 @@ var BASE_RATE = 3.00;           // 한국은행 기준금리 (2026.8.27 인상, 
 function legalCap(base){ return Math.min(10, base + 2); }   // 주택: min(연 10%, 기준금리+2%p)
 function jeonseToWolse(jeonse, newdep, rate){ var diff = jeonse - newdep; return {diff: diff, rent: diff * rate / 100 / 12}; }
 function wolseToJeonse(dep, rent, rate){ return {add: rate > 0 ? rent * 12 / (rate / 100) : 0, total: dep + (rate > 0 ? rent * 12 / (rate / 100) : 0)}; }
-function renewCap(dep, rent){ return {dep: Math.floor(dep * 1.05), rent: Math.floor(rent * 1.05), depUp: Math.floor(dep * 0.05), rentUp: Math.floor(rent * 0.05)}; }
+function renewCap(dep, rent){ return {dep: Math.floor(dep * 1.05 + 1e-6), rent: Math.floor(rent * 1.05 + 1e-6), depUp: Math.floor(dep * 0.05 + 1e-6), rentUp: Math.floor(rent * 0.05 + 1e-6)}; }
 // CALC-END
 
 function render(){

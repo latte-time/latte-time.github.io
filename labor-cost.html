@@ -151,14 +151,15 @@ function laborCost(wage, weeklyHours, people, sanjaePct, withIns, withSev){
   var juhyuHours = weeklyHours >= 15 ? Math.min(weeklyHours, 40) / 40 * 8 : 0;
   var monthHours = Math.round((weeklyHours + juhyuHours) * 365 / 7 / 12);
   var pay = monthHours * wage;
-  var f10 = function(x){ return Math.floor(x / 10) * 10; };
+  var f10 = function(x){ return Math.floor(x / 10 + 1e-7) * 10; };
   var ins = {pension:0, health:0, ltc:0, employ:0, sanjae:0};
   var covered = monthHours >= 60;
   if (withIns && covered){
-    ins.pension = f10(pay * RATE2026.pension);
-    ins.health = f10(pay * RATE2026.health);
-    ins.ltc = f10(ins.health * RATE2026.ltc);
-    ins.employ = f10(pay * (RATE2026.employ + RATE2026.employBiz));
+    var pBase = Math.min(Math.max(Math.floor(pay / 1000) * 1000, 410000), 6590000);   // 기준소득월액 2026.7~2027.6
+    ins.pension = f10(pBase * 475 / 10000);
+    ins.health = Math.min(f10(pay * 3595 / 100000), 4591740);
+    ins.ltc = f10(ins.health * 1314 / 10000);
+    ins.employ = f10(pay * 9 / 1000) + f10(pay * 25 / 10000);
   }
   if (withIns) ins.sanjae = f10(pay * sanjaePct / 100);
   var insTotal = ins.pension + ins.health + ins.ltc + ins.employ + ins.sanjae;

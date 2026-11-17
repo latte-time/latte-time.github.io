@@ -146,7 +146,7 @@ function bind(){
 
 // CALC-START
 
-function f10(x){ return Math.floor(x / 10) * 10; }
+function f10(x){ return Math.floor(x / 10 + 1e-7) * 10; }
 function prog(base, br){            // br: [[상한, 세율%], ...] 마지막 상한 Infinity
   var tax = 0, prev = 0;
   for (var i = 0; i < br.length; i++){
@@ -161,7 +161,7 @@ var GIFT_BR = [[1e8,10],[5e8,20],[1e9,30],[3e9,40],[Infinity,50]];
 
 function propertyTax(price, one, urban){
   var ratio = one ? (price <= 3e8 ? 0.43 : (price <= 6e8 ? 0.44 : 0.45)) : 0.60;
-  var base = Math.floor(price * ratio / 1000) * 1000;
+  var base = Math.floor(price * ratio / 1000 + 1e-7) * 1000;
   var special = one && price <= 9e8;
   var br = special ? [[6e7,0.05],[1.5e8,0.1],[3e8,0.2],[Infinity,0.35]] : [[6e7,0.1],[1.5e8,0.15],[3e8,0.25],[Infinity,0.4]];
   var tax = f10(prog(base, br));

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>영업일 계산기 2026·2027 – 근무일수·공휴일 제외 평일 수·N영업일 뒤 | 라떼타임 계산기</title>
+<meta name="description" content="두 날짜 사이 주말과 공휴일·대체공휴일을 뺀 근무일수(영업일)를 세고, 며칠 영업일 뒤 날짜를 계산합니다. 2026·2027년 공휴일 반영.">
+<link rel="canonical" href="https://latte-time.github.io/workdays.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="영업일 계산기 2026·2027 – 근무일수·공휴일 제외 평일 수·N영업일 뒤">
+<meta property="og:description" content="두 날짜 사이 주말과 공휴일·대체공휴일을 뺀 근무일수(영업일)를 세고, 며칠 영업일 뒤 날짜를 계산합니다. 2026·2027년 공휴일 반영.">
+<meta property="og:url" content="https://latte-time.github.io/workdays.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="date.html">날짜·나이</a> › 근무일수·영업일</nav>
+</div></header>
+<main class="wrap">
+  <h1>근무일수·영업일 계산기</h1>
+  <p class="lead">주말과 공휴일을 빼고 실제로 일하는 날이 며칠인지, 며칠 영업일 뒤가 언제인지 계산합니다.</p>
+  <section class="calc" aria-label="근무일수·영업일 계산">
+<div class="row"><span class="label">계산할 것</span><div class="seg" role="radiogroup"><input type="radio" name="mode" id="mode-0" value="count" checked><label for="mode-0">기간 안 근무일수</label><input type="radio" name="mode" id="mode-1" value="add"><label for="mode-1">N영업일 뒤 날짜</label></div></div>
+<div class="row"><label class="label" for="d1">시작일</label><div class="money"><input type="date" id="d1"></div></div>
+<div class="row"><label class="label" for="d2">종료일 (포함)</label><div class="money"><input type="date" id="d2"></div></div>
+<div class="row"><label class="label" for="n">영업일 수</label><div class="money"><input id="n" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 10"><span>일</span></div></div>
+<div class="row"><label style="display:block"><input type="checkbox" id="sat"> 토요일도 근무일로 센다</label></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>2026년 공휴일</h2>
+    <p>1월 1일, 2월 16~18일(설날), 3월 1일·2일(대체), 5월 1일(노동절), 5월 5일, 5월 24일·25일(부처님오신날·대체), 6월 3일(지방선거), 6월 6일, 7월 17일(제헌절), 8월 15일·17일(대체), 9월 24~26일(추석), 10월 3일·5일(대체), 10월 9일, 12월 25일</p>
+    <h2>2027년 공휴일</h2>
+    <p>1월 1일, 2월 6~9일(설날·대체), 3월 1일, 5월 1일, 5월 3일(대체), 5월 5일, 5월 13일(부처님오신날), 6월 6일, 7월 17일·19일(대체), 8월 15일·16일(대체), 9월 14~16일(추석), 10월 3일·4일(대체), 10월 9일·11일(대체), 12월 25일·27일(대체)</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>2026년 5월 1일 ~ 5월 31일</b><br>31일 중 주말 10일, 평일 공휴일 3일(1일·5일·25일) → <b>18일 근무</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>임시공휴일도 들어가나요?</summary><p>정부가 임시공휴일을 새로 정하면 이 표에 추가합니다. 발표 직후에는 반영이 늦을 수 있습니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="date-calc.html">날짜 계산기</a><a href="dday.html">D-day 계산기</a><a href="annual-leave.html">연차 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>관공서의 공휴일에 관한 규정(대체공휴일 포함, 2026년 노동절·제헌절 공휴일 지정 반영), 인사혁신처 연도별 월력요항, 공직선거법(2026.6.3 지방선거일).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 공휴일 표는 매년 1월에 갱신합니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+var HOL = {"2026": ["01-01", "02-16", "02-17", "02-18", "03-01", "03-02", "05-01", "05-05", "05-24", "05-25", "06-03", "06-06", "07-17", "08-15", "08-17", "09-24", "09-25", "09-26", "10-03", "10-05", "10-09", "12-25"], "2027": ["01-01", "02-06", "02-07", "02-08", "02-09", "03-01", "05-01", "05-03", "05-05", "05-13", "06-06", "07-17", "07-19", "08-15", "08-16", "09-14", "09-15", "09-16", "10-03", "10-04", "10-09", "10-11", "12-25", "12-27"]};
+function pd(s){ if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return null; var p = s.split('-'); var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); return (d.getUTCMonth() === +p[1] - 1) ? d : null; }
+function fd(d){ return d.toISOString().slice(0, 10); }
+function addDays(d, n){ return new Date(d.getTime() + n * 86400000); }
+function diffDays(a, b){ return Math.round((b - a) / 86400000); }
+var WD = ['일','월','화','수','목','금','토'];
+function fdk(d){ return d.getUTCFullYear() + '년 ' + (d.getUTCMonth() + 1) + '월 ' + d.getUTCDate() + '일 (' + WD[d.getUTCDay()] + ')'; }
+function isHoliday(d){ var y = String(d.getUTCFullYear()), l = HOL[y]; return !!(l && l.indexOf(fd(d).slice(5)) >= 0); }
+function hasYear(d){ return !!HOL[String(d.getUTCFullYear())]; }
+function isWork(d, sat){ var w = d.getUTCDay(); if (w === 0 || (w === 6 && !sat)) return false; return !isHoliday(d); }
+function countWork(a, b, sat){
+  var n = 0, hol = 0, wk = 0, total = diffDays(a, b) + 1;
+  for (var i = 0; i < total; i++){ var d = addDays(a, i), w = d.getUTCDay();
+    if (w === 0 || (w === 6 && !sat)) wk++; else if (isHoliday(d)) hol++; else n++; }
+  return {work: n, holidays: hol, weekend: wk, total: total};
+}
+function addWork(a, n, sat){ var d = a, k = 0; while (k < n){ d = addDays(d, 1); if (isWork(d, sat)) k++; } return d; }
+// CALC-END
+
+function render(){
+  var mode = val('mode');
+  $('d2').closest('.row').style.display = mode==='count' ? '' : 'none';
+  $('n').closest('.row').style.display = mode==='add' ? '' : 'none';
+  var a = pd($('d1').value), sat = $('sat').checked;
+  if (!a){ empty('시작일을 고르면 결과가 여기에 나옵니다.'); return; }
+  if (!hasYear(a)){ empty('2026~2027년 날짜만 계산할 수 있습니다(공휴일 표 기준).'); return; }
+  if (mode === 'count'){
+    var b = pd($('d2').value); if (!b){ empty('종료일을 골라 주세요.'); return; }
+    if (b < a){ empty('종료일이 시작일보다 뒤여야 합니다.'); return; }
+    if (!hasYear(b)){ empty('2026~2027년 날짜만 계산할 수 있습니다(공휴일 표 기준).'); return; }
+    var r = countWork(a, b, sat);
+    show(fdk(a) + ' ~ ' + fdk(b), r.work + '일 근무', [['전체 일수', r.total + '일'], [sat ? '일요일' : '주말(토·일)', r.weekend + '일'], ['평일 공휴일·대체공휴일', r.holidays + '일']], '회사 창립기념일·근로자의 날 휴무 여부 등은 회사마다 다릅니다.');
+  } else {
+    var n = num('n'); if (!n){ empty('영업일 수를 입력해 주세요.'); return; }
+    var t = addWork(a, n, sat);
+    if (!hasYear(t)){ empty('결과가 2027년을 넘어 계산할 수 없습니다.'); return; }
+    show(fdk(a) + '부터 ' + n + '영업일 뒤', fdk(t), null, '시작일 다음 영업일을 1일째로 셉니다.');
+  }
+}
+(function(){ var t = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10); if (!$('d1').value) $('d1').value = t; })();
+bind();
+</script>
+</body>
+</html>

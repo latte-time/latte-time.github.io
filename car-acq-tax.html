@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자동차 취득세 계산기 2026 – 신차·중고차 7%, 경차 4%·75만 원 감면, 전기차 감면 | 라떼타임 계산기</title>
+<meta name="description" content="차량 가격과 차종을 넣으면 자동차 취득세(비영업 승용 7%, 경차 4%, 영업용 4%, 승합·화물 5%)와 경차 75만 원·전기차 140만 원 감면을 반영해 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/car-acq-tax.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="자동차 취득세 계산기 2026 – 신차·중고차 7%, 경차 4%·75만 원 감면, 전기차 감면">
+<meta property="og:description" content="차량 가격과 차종을 넣으면 자동차 취득세(비영업 승용 7%, 경차 4%, 영업용 4%, 승합·화물 5%)와 경차 75만 원·전기차 140만 원 감면을 반영해 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/car-acq-tax.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="tax.html">세금</a> › 자동차 취득세</nav>
+</div></header>
+<main class="wrap">
+  <h1>자동차 취득세 계산기</h1>
+  <p class="lead">차를 살 때 내는 취득세를 차종과 가격으로 계산합니다.</p>
+  <section class="calc" aria-label="자동차 취득세 계산">
+<div class="row"><span class="label">차종</span><div class="seg" role="radiogroup"><input type="radio" name="kind" id="kind-0" value="car" checked><label for="kind-0">승용 (비영업)</label><input type="radio" name="kind" id="kind-1" value="mini"><label for="kind-1">경차</label><input type="radio" name="kind" id="kind-2" value="ev"><label for="kind-2">전기·수소 승용</label><input type="radio" name="kind" id="kind-3" value="biz"><label for="kind-3">영업용 승용</label><input type="radio" name="kind" id="kind-4" value="van"><label for="kind-4">승합·화물 (비영업)</label></div></div>
+<div class="row"><label class="label" for="price">차량 가격 (부가세 제외)</label><div class="money"><input id="price" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 3,000"><span>만원</span></div><div class="hint">신차는 판매가격에서 부가세를 뺀 금액, 중고차는 실제 거래가격과 시가표준액 중 높은 금액입니다.</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>자동차 취득세율</h2>
+    <table class="rate"><thead><tr><th>차종</th><th>세율</th><th>감면</th></tr></thead><tbody>
+      <tr><td>비영업용 승용</td><td>7%</td><td>-</td></tr>
+      <tr><td>경차 (비영업용)</td><td>4%</td><td>75만 원까지 면제 (2027.12.31까지)</td></tr>
+      <tr><td>전기·수소 승용</td><td>7%</td><td>140만 원까지 감면 (전기차 2026.12.31까지)</td></tr>
+      <tr><td>영업용 승용</td><td>4%</td><td>-</td></tr>
+      <tr><td>비영업용 승합·화물</td><td>5%</td><td>-</td></tr>
+    </tbody></table>
+    <p>하이브리드차 취득세 감면은 2024년 말에 끝나 2025년부터 일반 승용차와 같은 7%입니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>승용차 3,000만 원 (부가세 제외)</b><br>3,000만 × 7% = 취득세 <b>210만 원</b></div>
+    <div class="ex"><b>경차 1,500만 원</b><br>1,500만 × 4% = 60만 원 → 75만 원 한도 안이라 <b>0원</b></div>
+    <div class="ex"><b>전기차 4,500만 원</b><br>4,500만 × 7% = 315만 원 − 140만 원 = <b>175만 원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>언제까지 내야 하나요?</summary><p>취득한 날부터 60일 안에 신고·납부해야 합니다. 신차는 보통 등록 대행 때 함께 냅니다.</p></details>
+    <details><summary>다자녀 감면도 되나요?</summary><p>18세 미만 자녀가 여럿인 가구는 감면을 받을 수 있지만 인승·한도 조건이 있어 이 계산기에는 넣지 않았습니다. 시·군·구청에 확인하세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="car-tax.html">자동차세 계산기</a><a href="acq-tax.html">주택 취득세 계산기</a><a href="installment.html">카드 할부 수수료 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>지방세법 제12조(부동산 외 취득의 세율: 비영업용 승용 7%, 경자동차 4%, 영업용 4%, 그 밖 5%), 지방세특례제한법 제67조(경형자동차 취득세 75만 원 감면, 2027.12.31까지), 제66조(전기·수소자동차 취득세 140만 원 감면).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 다자녀·장애인 등 감면과 공채 매입비는 반영하지 않았습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var CAR_ACQ = {car: 7, mini: 4, ev: 7, biz: 4, van: 5};
+function carAcqTax(kind, price){
+  var rate = CAR_ACQ[kind];
+  var tax = Math.floor(price * rate / 100 / 10 + 1e-9) * 10;
+  var cut = kind === 'mini' ? Math.min(tax, 750000) : kind === 'ev' ? Math.min(tax, 1400000) : 0;
+  return {rate: rate, tax: tax, cut: cut, pay: tax - cut};
+}
+// CALC-END
+
+function render(){
+  var price = num('price') * 10000, kind = val('kind');
+  if (!price){ empty('차량 가격을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var r = carAcqTax(kind, price);
+  var list = [['적용 세율', r.rate + '%'], ['취득세 (감면 전)', won(r.tax)]];
+  if (r.cut) list.push([kind === 'mini' ? '경차 감면 (최대 75만 원)' : '전기·수소차 감면 (최대 140만 원)', '−' + won(r.cut)]);
+  show('낼 취득세', won(r.pay), list,
+    (kind === 'ev' ? '전기차 감면은 2026년 12월 31일까지 취득분 기준입니다. ' : kind === 'mini' ? '경차 감면은 2027년 12월 31일까지이며, 1년 안에 영업용으로 쓰면 추징됩니다. ' : '') +
+    '등록할 때 함께 사는 공채(도시철도·지역개발채권)와 번호판·인지대는 지역마다 달라 넣지 않았습니다.');
+}
+bind();
+</script>
+</body>
+</html>

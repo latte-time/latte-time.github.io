@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>출산 예정일 계산기 – 마지막 생리일로 예정일·임신 주수 계산 | 라떼타임 계산기</title>
+<meta name="description" content="마지막 생리 시작일과 생리 주기를 넣으면 출산 예정일(네겔레 법칙)과 오늘 기준 임신 주수, 임신 시기별 주요 날짜를 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/due-date.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="출산 예정일 계산기 – 마지막 생리일로 예정일·임신 주수 계산">
+<meta property="og:description" content="마지막 생리 시작일과 생리 주기를 넣으면 출산 예정일(네겔레 법칙)과 오늘 기준 임신 주수, 임신 시기별 주요 날짜를 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/due-date.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="date.html">날짜·나이</a> › 출산 예정일</nav>
+</div></header>
+<main class="wrap">
+  <h1>출산 예정일 계산기</h1>
+  <p class="lead">마지막 생리 시작일로 출산 예정일과 지금 임신 몇 주인지 계산합니다.</p>
+  <section class="calc" aria-label="출산 예정일 계산">
+<div class="row"><label class="label" for="lmp">마지막 생리 시작일</label><div class="money"><input type="date" id="lmp"></div></div>
+<div class="row"><label class="label" for="cycle">평소 생리 주기</label><div class="money"><input id="cycle" class="num" inputmode="numeric" autocomplete="off" placeholder="28"><span>일</span></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>계산 방법 (네겔레 법칙)</h2>
+    <p>출산 예정일 = 마지막 생리 시작일 + 280일(40주). 생리 주기가 28일보다 길거나 짧으면 그 차이만큼 더하거나 뺍니다.</p>
+    <p>임신 주수도 마지막 생리 시작일부터 셉니다. 그래서 실제로 수정된 날은 임신 2주 무렵입니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>마지막 생리 2026년 3월 1일, 주기 28일</b><br>3월 1일 + 280일 = <b>2026년 12월 6일(일)</b></div>
+    <div class="ex"><b>같은 날, 주기 32일</b><br>280 + 4일 = <b>2026년 12월 10일(목)</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>예정일 뒤에는 정부 지원이 어떻게 되나요?</summary><p>출산하면 첫만남이용권과 부모급여를 받습니다. 금액은 <a href="child-benefit.html">부모급여·아동수당 계산기</a>에서 확인하세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="child-benefit.html">부모급여·아동수당 계산기</a><a href="parental-leave.html">육아휴직급여 계산기</a><a href="dday.html">D-day 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>네겔레 법칙(마지막 월경 시작일 + 280일), 대한산부인과학회 임신 주수 산정 기준(월경 주기 보정).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 의학적 판단은 산부인과 진료로 확인하세요. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function pd(s){ if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return null; var p = s.split('-'); var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); return (d.getUTCMonth() === +p[1] - 1) ? d : null; }
+function fd(d){ return d.toISOString().slice(0, 10); }
+function addDays(d, n){ return new Date(d.getTime() + n * 86400000); }
+function diffDays(a, b){ return Math.round((b - a) / 86400000); }
+var WD = ['일','월','화','수','목','금','토'];
+function fdk(d){ return d.getUTCFullYear() + '년 ' + (d.getUTCMonth() + 1) + '월 ' + d.getUTCDate() + '일 (' + WD[d.getUTCDay()] + ')'; }
+function dueDate(lmp, cycle, today){
+  var adj = (cycle || 28) - 28, due = addDays(lmp, 280 + adj), conc = addDays(lmp, 14 + adj);
+  var g = diffDays(addDays(lmp, adj), today);
+  return {due: due, conc: conc, weeks: Math.floor(g / 7), days: ((g % 7) + 7) % 7, gdays: g, left: diffDays(today, due),
+          t2: addDays(lmp, adj + 14 * 7), t3: addDays(lmp, adj + 28 * 7), full: addDays(lmp, adj + 37 * 7)};
+}
+// CALC-END
+
+function render(){
+  var l = pd($('lmp').value);
+  if (!l){ empty('마지막 생리 시작일을 고르면 결과가 여기에 나옵니다.'); return; }
+  var c = num('cycle') || 28;
+  if (c < 21 || c > 45){ empty('생리 주기는 21~45일 사이로 넣어 주세요.'); return; }
+  var today = pd(new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10)), r = dueDate(l, c, today);
+  var list = [];
+  if (r.gdays >= 0 && r.gdays <= 300) list.push(['오늘 임신 주수', r.weeks + '주 ' + r.days + '일'], ['예정일까지', r.left >= 0 ? r.left + '일' : '예정일 ' + (-r.left) + '일 지남']);
+  list.push(['예상 배란·수정일', fdk(r.conc)], ['임신 중기 시작 (14주)', fdk(r.t2)], ['임신 후기 시작 (28주)', fdk(r.t3)], ['만삭 (37주)', fdk(r.full)]);
+  show('출산 예정일', fdk(r.due), list, '예정일에 실제로 태어나는 아기는 5% 안팎입니다. 초음파로 확인한 예정일이 더 정확하니 병원 안내를 따르세요.');
+}
+bind();
+</script>
+</body>
+</html>

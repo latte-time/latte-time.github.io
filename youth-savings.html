@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청년미래적금 계산기 2026 – 정부기여금 6%·12% 포함 만기 수령액 | 라떼타임 계산기</title>
+<meta name="description" content="월 납입액과 은행 금리, 일반형·우대형을 넣으면 청년미래적금 3년 만기 때 받는 원금·이자·정부기여금 합계를 계산하고 일반 적금과 비교합니다.">
+<link rel="canonical" href="https://latte-time.github.io/youth-savings.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="청년미래적금 계산기 2026 – 정부기여금 6%·12% 포함 만기 수령액">
+<meta property="og:description" content="월 납입액과 은행 금리, 일반형·우대형을 넣으면 청년미래적금 3년 만기 때 받는 원금·이자·정부기여금 합계를 계산하고 일반 적금과 비교합니다.">
+<meta property="og:url" content="https://latte-time.github.io/youth-savings.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="benefit.html">지원금·혜택</a> › 정책 적금 만기액</nav>
+</div></header>
+<main class="wrap">
+  <h1>정책 적금 만기액 계산기 (청년미래적금)</h1>
+  <p class="lead">청년미래적금에 매달 넣으면 3년 뒤 정부기여금과 비과세 이자를 합쳐 얼마를 받는지 계산합니다.</p>
+  <section class="calc" aria-label="정책 적금 만기액 계산">
+<div class="row"><label class="label" for="pay">월 납입액</label><div class="money"><input id="pay" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 500,000"><span>원</span></div><div class="hint">월 최대 50만 원(연 600만 원).</div></div>
+<div class="row"><span class="label">유형</span><div class="seg" role="radiogroup"><input type="radio" name="type" id="type-0" value="6" checked><label for="type-0">일반형 (기여금 6%)</label><input type="radio" name="type" id="type-1" value="12"><label for="type-1">우대형 (기여금 12%)</label></div></div>
+<div class="row"><label class="label" for="rate">은행 금리 (연, 우대 포함)</label><div class="money"><input id="rate" class="dec" inputmode="decimal" autocomplete="off" placeholder=""><span>%</span></div><div class="hint">가입한 은행의 적용 금리. 예: 5</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>청년미래적금 조건 (2026년)</h2>
+    <table class="rate"><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody>
+      <tr><td>나이</td><td>만 19~34세 (병역기간 최대 6년 제외)</td></tr>
+      <tr><td>만기·납입</td><td>3년, 월 최대 50만 원 자유적립</td></tr>
+      <tr><td>일반형</td><td>개인소득 6,000만 원 이하(또는 연 매출 3억 원 이하 소상공인), 가구 중위소득 200% 이하 → 납입액의 6%</td></tr>
+      <tr><td>우대형</td><td>중소기업 신규 취업 청년 등, 가구 중위소득 150% 이하 → 납입액의 12%</td></tr>
+      <tr><td>세금</td><td>이자 비과세</td></tr>
+    </tbody></table>
+    <p>청년도약계좌는 2025년 12월로 신규 가입이 끝났고, 기존 가입자는 그대로 유지하거나 정해진 기간에 청년미래적금으로 옮길 수 있습니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>월 50만 원, 우대형, 은행 금리 5%</b><br>원금 1,800만 + 이자 1,387,500 + 기여금 216만 = <b>21,547,500원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>신청은 언제 하나요?</summary><p>정해진 모집 기간에만 받습니다. 2026년은 6월과 10월에 모집했고, 다음 모집은 2027년 예산 확정 뒤 공고됩니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="deposit-interest.html">예적금 이자 계산기</a><a href="compound.html">복리·목표 저축 계산기</a><a href="eitc.html">근로장려금 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>금융위원회 청년미래적금 안내(2026.6, 일반형 6%·우대형 12%, 월 50만 원, 3년, 이자 비과세), 조세특례제한법(청년미래적금 이자소득 비과세). 은행 이자는 일반 적금 단리 공식.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 은행 금리와 우대 조건은 은행마다 다릅니다. 기여금은 요건 심사 뒤 지급됩니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function youthSavings(pay, typePct, rate){
+  pay = Math.min(pay, 500000);
+  var n = 36, principal = pay * n;
+  var interest = Math.floor(pay * rate / 100 / 12 * n * (n + 1) / 2);
+  var contrib = Math.floor(pay * typePct / 100) * n;
+  var normalTax = Math.floor(interest * 0.14 / 10) * 10 + Math.floor(Math.floor(interest * 0.14 / 10) * 10 * 0.1 / 10) * 10;
+  return {pay: pay, principal: principal, interest: interest, contrib: contrib, total: principal + interest + contrib,
+          normalNet: principal + interest - normalTax, normalTax: normalTax};
+}
+// CALC-END
+
+function render(){
+  var p = num('pay');
+  if (!p){ empty('월 납입액을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var r = youthSavings(p, parseInt(val('type'),10), num('rate'));
+  show('3년 만기 예상 수령액', won(r.total), [['납입 원금 (' + won(r.pay) + ' × 36개월)', won(r.principal)], ['은행 이자 (단리, 비과세)', won(r.interest)], ['정부기여금', won(r.contrib)],
+    ['같은 금리 일반 적금이면', won(r.normalNet) + ' <span style="color:#888">(이자세 ' + won(r.normalTax) + ')</span>']],
+    (p > 500000 ? '월 50만 원을 넘는 금액은 넣을 수 없어 50만 원으로 계산했습니다. ' : '') + '매달 같은 날 넣고 중도 해지하지 않는다고 가정했습니다. 정부기여금에 붙는 이자는 은행마다 달라 넣지 않았습니다. 중도 해지하면 기여금과 비과세 혜택을 받지 못합니다.');
+}
+bind();
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전세 vs 월세 비교 계산기 – 대출이자·기회비용까지 총비용 비교 | 라떼타임 계산기</title>
+<meta name="description" content="전세 보증금과 전세대출 금리, 월세 보증금과 월세, 예금금리를 넣으면 계약 기간 동안 전세와 월세 중 어느 쪽이 돈이 덜 드는지 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/jeonse-vs-rent.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="전세 vs 월세 비교 계산기 – 대출이자·기회비용까지 총비용 비교">
+<meta property="og:description" content="전세 보증금과 전세대출 금리, 월세 보증금과 월세, 예금금리를 넣으면 계약 기간 동안 전세와 월세 중 어느 쪽이 돈이 덜 드는지 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/jeonse-vs-rent.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="realestate.html">부동산</a> › 전세 vs 월세</nav>
+</div></header>
+<main class="wrap">
+  <h1>전세 vs 월세 비교 계산기</h1>
+  <p class="lead">같은 집을 전세로 살 때와 월세로 살 때 실제로 나가는 돈을 비교합니다.</p>
+  <section class="calc" aria-label="전세 vs 월세 계산">
+<div class="row" style="margin-top:18px"><span class="label" style="font-size:16px;color:var(--brand)">전세</span></div>
+<div class="row"><label class="label" for="jd">전세 보증금</label><div class="money"><input id="jd" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 300,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="jl">그중 전세대출</label><div class="money"><input id="jl" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 200,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="jr">전세대출 금리 (연)</label><div class="money"><input id="jr" class="dec" inputmode="decimal" autocomplete="off" placeholder=""><span>%</span></div><div class="hint">예: 3.8</div></div>
+<div class="row" style="margin-top:18px"><span class="label" style="font-size:16px;color:var(--brand)">월세</span></div>
+<div class="row"><label class="label" for="md">월세 보증금</label><div class="money"><input id="md" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 30,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="mr">월세</label><div class="money"><input id="mr" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 1,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="mf">관리비 차이 (월세 쪽이 더 비싸면 입력)</label><div class="money"><input id="mf" class="num" inputmode="numeric" autocomplete="off" placeholder="없으면 비움"><span>원</span></div></div>
+<div class="row" style="margin-top:18px"><span class="label" style="font-size:16px;color:var(--brand)">공통</span></div>
+<div class="row"><label class="label" for="dr">내 돈 굴릴 때 금리 (예금금리, 연)</label><div class="money"><input id="dr" class="dec" inputmode="decimal" autocomplete="off" placeholder=""><span>%</span></div><div class="hint">보증금으로 묶이는 내 돈을 예금에 넣었다면 받았을 이자(세후 아님). 예: 2.5</div></div>
+<div class="row"><label class="label" for="years">계약 기간</label><div class="money"><select id="years"><option value="1">1년</option><option value="2" selected>2년</option><option value="3">3년</option><option value="4">4년</option></select></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>계산 방법</h2>
+    <p><b>전세 1년 비용</b> = 전세대출 × 대출금리 + (보증금 − 대출) × 예금금리<br><b>월세 1년 비용</b> = 월세 × 12 + 월세 보증금 × 예금금리</p>
+    <p>보증금은 돌려받는 돈이지만, 그 돈을 예금에 넣었다면 받았을 이자를 포기한 것이므로 비용(기회비용)으로 셉니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>전세 3억(대출 2억, 3.8%) vs 월세 보증금 3천만·월 100만, 예금금리 2.5%, 2년</b><br>전세: 760만 + 250만 = 연 1,010만 원 → 2년 2,020만 원<br>월세: 1,200만 + 75만 = 연 1,275만 원 → 2년 2,550만 원<br>→ <b>전세가 530만 원 덜 듭니다</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>전월세 전환율은 어떻게 보나요?</summary><p>(월세 × 12) ÷ (전세 보증금 − 월세 보증금)입니다. 이 값이 내가 빌릴 수 있는 대출금리보다 높으면 전세, 예금금리보다 낮으면 월세가 유리한 편입니다.</p></details>
+    <details><summary>월세 세액공제를 받으면 달라지나요?</summary><p>총급여 8,000만 원 이하 무주택 세대주는 월세의 15~17%(연 1,000만 원 한도)를 돌려받습니다. 해당되면 월세 쪽 비용이 그만큼 줄어듭니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="rent-convert.html">전월세 전환 계산기</a><a href="jeonse-guarantee.html">전세보증보험료 계산기</a><a href="loan-repay.html">대출 원리금 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>계산식은 일반적인 기회비용 비교 방식입니다. 전월세 전환율 상한은 주택임대차보호법 시행령 제9조(기준금리 + 2%와 연 10% 중 낮은 값), 월세 세액공제는 조세특례제한법 제95조의2.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 금리는 계약 기간 동안 같다고 가정합니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function jeonseVsRent(o){
+  var jOwn = Math.max(o.jd - o.jl, 0);
+  var jInt = o.jl * o.jr / 100, jOpp = jOwn * o.dr / 100, jYear = jInt + jOpp;
+  var mOpp = o.md * o.dr / 100, mYear = o.mr * 12 + o.mf * 12 + mOpp;
+  var y = o.years;
+  return {jOwn: jOwn, jInt: jInt, jOpp: jOpp, jYear: jYear, jTotal: jYear * y, mOpp: mOpp, mYear: mYear, mTotal: mYear * y,
+          diff: mYear * y - jYear * y, conv: (o.jd - o.md) > 0 ? o.mr * 12 / (o.jd - o.md) * 100 : 0};
+}
+// CALC-END
+
+function render(){
+  var jd = num('jd'), mr = num('mr');
+  if (!jd || !mr){ empty('전세 보증금과 월세를 입력하면 결과가 여기에 나옵니다.'); return; }
+  var jl = Math.min(num('jl'), jd), y = parseInt($('years').value,10);
+  var r = jeonseVsRent({jd:jd, jl:jl, jr:num('jr'), md:num('md'), mr:mr, mf:num('mf'), dr:num('dr'), years:y});
+  var cheaper = r.diff > 0 ? '전세가 ' + won(r.diff) + ' 덜 듭니다' : r.diff < 0 ? '월세가 ' + won(-r.diff) + ' 덜 듭니다' : '두 방식 비용이 같습니다';
+  show(y + '년 기준 비교', cheaper, [
+    ['전세 1년 비용', won(r.jYear) + ' <span style="color:#888">(대출이자 ' + won(r.jInt) + ' + 내 돈 ' + man(r.jOwn) + ' 기회비용 ' + won(r.jOpp) + ')</span>'],
+    ['월세 1년 비용', won(r.mYear) + ' <span style="color:#888">(월세·관리비 ' + won((r.mYear - r.mOpp)) + ' + 보증금 기회비용 ' + won(r.mOpp) + ')</span>'],
+    ['전세 ' + y + '년 총비용', won(r.jTotal)], ['월세 ' + y + '년 총비용', won(r.mTotal)],
+    ['이 집의 전월세 전환율', r.conv ? r.conv.toFixed(2) + '%' : '-']
+  ], '보증금을 못 돌려받을 위험, 전세보증보험료, 중개보수, 월세 세액공제(최대 17%)는 넣지 않았습니다. 전환율이 전세대출 금리보다 높으면 보통 전세가 유리합니다.');
+}
+bind();
+</script>
+</body>
+</html>

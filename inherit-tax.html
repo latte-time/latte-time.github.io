@@ -157,7 +157,7 @@ function bind(){
 
 // CALC-START
 
-function f10(x){ return Math.floor(x / 10) * 10; }
+function f10(x){ return Math.floor(x / 10 + 1e-7) * 10; }
 function prog(base, br){            // br: [[상한, 세율%], ...] 마지막 상한 Infinity
   var tax = 0, prev = 0;
   for (var i = 0; i < br.length; i++){
@@ -184,7 +184,7 @@ function inheritTax(o){
   var dedLimit = Math.max(0, gross - o.pre);
   var ded = Math.min(basic + spDed + finDed, dedLimit);
   var base = Math.max(0, gross - ded);
-  var calcTax = f10(prog(base, GIFT_BR));
+  var calcTax = base < 500000 ? 0 : f10(prog(base, GIFT_BR));   // 과세최저한: 과세표준 50만 원 미만 (상증법 제25조②)
   var credit = f10(calcTax * 0.03);
   return {gross: gross, basic: basic, spDed: spDed, finDed: finDed, ded: ded, base: base, calcTax: calcTax, credit: credit, total: calcTax - credit};
 }

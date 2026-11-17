@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>간이과세 vs 일반과세 부가세 비교 계산기 2026 – 업종별 부가가치율 | 라떼타임 계산기</title>
+<meta name="description" content="업종과 연 매출, 연 매입, 카드 매출을 넣으면 간이과세자와 일반과세자일 때 1년 부가가치세를 각각 계산해 비교합니다. 간이 기준 1억 400만 원, 납부면제 4,800만 원 반영.">
+<link rel="canonical" href="https://latte-time.github.io/vat-type.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="간이과세 vs 일반과세 부가세 비교 계산기 2026 – 업종별 부가가치율">
+<meta property="og:description" content="업종과 연 매출, 연 매입, 카드 매출을 넣으면 간이과세자와 일반과세자일 때 1년 부가가치세를 각각 계산해 비교합니다. 간이 기준 1억 400만 원, 납부면제 4,800만 원 반영.">
+<meta property="og:url" content="https://latte-time.github.io/vat-type.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="business.html">사업자</a> › 간이 vs 일반과세</nav>
+</div></header>
+<main class="wrap">
+  <h1>간이과세 vs 일반과세 비교 계산기</h1>
+  <p class="lead">같은 매출·매입이라면 간이과세와 일반과세 중 부가세가 얼마나 다른지 1년 기준으로 비교합니다.</p>
+  <section class="calc" aria-label="간이 vs 일반과세 계산">
+<div class="row"><label class="label" for="ind">업종 (간이과세 부가가치율)</label><div class="money"><select id="ind"><option value="15" selected>소매업·음식점업·재생용 재료 수집 (15%)</option><option value="20">제조업·농업·임업·어업·소화물 운송 (20%)</option><option value="25">숙박업 (25%)</option><option value="30">건설·운수·창고·정보통신·그 밖의 서비스업 (30%)</option><option value="40">금융·보험·전문서비스·부동산 관련·임대 (40%)</option></select></div></div>
+<div class="row"><label class="label" for="sales">연 매출 (부가세 포함)</label><div class="money"><input id="sales" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 80,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="buy">연 매입 (세금계산서·카드 등 증빙, 부가세 포함)</label><div class="money"><input id="buy" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 30,000,000"><span>원</span></div><div class="hint">재료·상품·인테리어·비품 등 부가세가 붙은 매입.</div></div>
+<div class="row"><label class="label" for="card">그중 카드·현금영수증 매출</label><div class="money"><input id="card" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 60,000,000"><span>원</span></div><div class="hint">신용카드매출전표 등 발행 세액공제(1.3%) 계산용.</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>계산 방법</h2>
+    <table class="rate"><thead><tr><th>구분</th><th>일반과세자</th><th>간이과세자</th></tr></thead><tbody>
+      <tr><td>대상</td><td>연 매출 1억 400만 원 이상 또는 선택</td><td>연 매출(공급대가) 1억 400만 원 미만</td></tr>
+      <tr><td>납부세액</td><td>매출 × 10/110 − 매입 × 10/110</td><td>매출 × 업종별 부가가치율 × 10% − 매입 × 0.5%</td></tr>
+      <tr><td>환급</td><td>받음</td><td>못 받음</td></tr>
+      <tr><td>납부면제</td><td>없음</td><td>연 매출 4,800만 원 미만</td></tr>
+      <tr><td>신고</td><td>1년 2번(1월·7월)</td><td>1년 1번(1월)</td></tr>
+    </tbody></table>
+    <p>두 유형 모두 카드·현금영수증 매출의 1.3%를 연 1,000만 원까지 공제받습니다(개인사업자, 2027년 말까지).</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>음식점, 매출 8,000만 원, 매입 3,000만 원, 카드 매출 6,000만 원</b><br>일반: 7,272,727 − 2,727,272 − 780,000 = <b>3,765,455원</b><br>간이: 1,200,000 − 150,000 − 780,000 = <b>270,000원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>간이과세자는 세금계산서를 못 끊나요?</summary><p>직전 연도 매출 4,800만 원 이상인 간이과세자는 세금계산서를 발급해야 합니다. 4,800만 원 미만은 영수증만 발급합니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="vat.html">부가세 계산기</a><a href="card-fee.html">카드수수료 계산기</a><a href="income-tax.html">종합소득세 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>부가가치세법 제61조(간이과세 기준), 같은 법 시행령 제109조(1억 400만 원), 제111조(업종별 부가가치율 15~40%), 부가가치세법 제63조(간이과세자 매입 공급대가 0.5% 공제), 제69조(4,800만 원 미만 납부면제), 제46조(신용카드매출전표 등 발행 세액공제 1.3%, 연 1,000만 원).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 여러 업종을 겸영하면 업종별로 나눠 계산합니다. 의제매입세액공제 등은 넣지 않았습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function vatGeneral(sales, buy, card){
+  var out = Math.floor(sales * 10 / 110), inp = Math.floor(buy * 10 / 110), credit = Math.min(Math.floor(card * 0.013), 10000000);
+  var base = out - inp, tax = base > 0 ? Math.max(base - credit, 0) : base;
+  return {out: out, inp: inp, credit: base > 0 ? Math.min(credit, base) : 0, tax: tax};
+}
+function vatSimple(sales, buy, card, ratePct){
+  var out = Math.floor(sales * ratePct / 100 * 0.1), inp = Math.floor(buy * 0.005), credit = Math.min(Math.floor(card * 0.013), 10000000);
+  var tax = Math.max(out - inp - credit, 0), exempt = sales < 48000000;
+  return {out: out, inp: Math.min(inp, out), credit: Math.min(credit, Math.max(out - inp, 0)), tax: exempt ? 0 : tax, exempt: exempt, eligible: sales < 104000000};
+}
+// CALC-END
+
+function render(){
+  var s = num('sales'), b = num('buy'), c = Math.min(num('card'), s), ind = parseInt($('ind').value,10);
+  if (!s){ empty('연 매출을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var g = vatGeneral(s, b, c), m = vatSimple(s, b, c, ind);
+  var diff = g.tax - m.tax;
+  var head = !m.eligible ? '연 매출 1억 400만 원 이상은 간이과세를 받을 수 없습니다' : (diff > 0 ? '간이과세가 ' + won(diff) + ' 적습니다' : diff < 0 ? '일반과세가 ' + won(-diff) + ' 적습니다' : '두 방식 세액이 같습니다');
+  show('1년 부가세 비교', head, [
+    ['일반과세 부가세', g.tax < 0 ? '환급 ' + won(-g.tax) : won(g.tax)],
+    ['└ 매출세액 − 매입세액 − 카드공제', won(g.out) + ' − ' + won(g.inp) + ' − ' + won(g.credit)],
+    ['간이과세 부가세', m.exempt ? '0원 (매출 4,800만 원 미만 납부면제)' : won(m.tax)],
+    ['└ 매출×' + ind + '%×10% − 매입×0.5% − 카드공제', won(m.out) + ' − ' + won(m.inp) + ' − ' + won(m.credit)]
+  ], '간이과세자는 환급을 받지 못합니다. 인테리어 등 초기 매입이 크면 일반과세가 유리할 수 있습니다. 부동산임대업·과세유흥장소는 간이 기준이 4,800만 원이고, 일부 업종·지역은 간이과세에서 빠집니다.');
+}
+bind();
+</script>
+</body>
+</html>

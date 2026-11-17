@@ -154,9 +154,9 @@ function depositCalc(kind, amount, rate, months, comp, tax){
     if (comp === 'simple') interest = amount * i * months * (months + 1) / 2;
     else { for (var k = 1; k <= months; k++) interest += amount * (Math.pow(1 + i, k) - 1); }
   }
-  interest = Math.floor(interest);
+  interest = Math.floor(interest + 1e-6);
   var incomeTax = 0, localTax = 0;
-  if (tax === 'normal'){ incomeTax = Math.floor(interest * 0.14 / 10) * 10; localTax = Math.floor(incomeTax * 0.1 / 10) * 10; }
+  if (tax === 'normal'){ incomeTax = Math.floor(interest * 0.14 / 10 + 1e-7) * 10; localTax = Math.floor(incomeTax * 0.1 / 10 + 1e-7) * 10; }
   var after = interest - incomeTax - localTax;
   return {principal: principal, interest: interest, incomeTax: incomeTax, localTax: localTax, after: after, total: principal + after};
 }

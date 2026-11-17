@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>날짜 계산기 – 며칠 뒤 날짜·두 날짜 사이 일수·주·개월 | 라떼타임 계산기</title>
+<meta name="description" content="기준일에서 며칠·몇 주·몇 개월 뒤(전) 날짜와 두 날짜 사이의 일수, 주 수, 개월 수를 계산합니다. 첫날 포함 여부 선택.">
+<link rel="canonical" href="https://latte-time.github.io/date-calc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="날짜 계산기 – 며칠 뒤 날짜·두 날짜 사이 일수·주·개월">
+<meta property="og:description" content="기준일에서 며칠·몇 주·몇 개월 뒤(전) 날짜와 두 날짜 사이의 일수, 주 수, 개월 수를 계산합니다. 첫날 포함 여부 선택.">
+<meta property="og:url" content="https://latte-time.github.io/date-calc.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="date.html">날짜·나이</a> › 날짜 계산</nav>
+</div></header>
+<main class="wrap">
+  <h1>날짜 계산기</h1>
+  <p class="lead">며칠 뒤가 무슨 날인지, 두 날짜 사이가 며칠인지 계산합니다.</p>
+  <section class="calc" aria-label="날짜 계산 계산">
+<div class="row"><span class="label">계산할 것</span><div class="seg" role="radiogroup"><input type="radio" name="mode" id="mode-0" value="add" checked><label for="mode-0">며칠 뒤·전 날짜</label><input type="radio" name="mode" id="mode-1" value="diff"><label for="mode-1">두 날짜 사이</label></div></div>
+<div class="row"><label class="label" for="d1">기준일 (시작일)</label><div class="money"><input type="date" id="d1"></div></div>
+<div class="row"><label class="label" for="n">더할 기간</label><div class="money"><input id="n" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 100"><span></span></div></div>
+<div class="row"><span class="label">단위</span><div class="seg" role="radiogroup"><input type="radio" name="unit" id="unit-0" value="d" checked><label for="unit-0">일</label><input type="radio" name="unit" id="unit-1" value="w"><label for="unit-1">주</label><input type="radio" name="unit" id="unit-2" value="m"><label for="unit-2">개월</label><input type="radio" name="unit" id="unit-3" value="y"><label for="unit-3">년</label></div></div>
+<div class="row"><span class="label">방향</span><div class="seg" role="radiogroup"><input type="radio" name="sign" id="sign-0" value="1" checked><label for="sign-0">뒤</label><input type="radio" name="sign" id="sign-1" value="-1"><label for="sign-1">전</label></div></div>
+<div class="row"><label class="label" for="d2">종료일</label><div class="money"><input type="date" id="d2"></div></div>
+<div class="row"><label style="display:block"><input type="checkbox" id="incl"> 첫날을 1일째로 센다 (기념일 방식)</label></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>날짜를 세는 두 가지 방법</h2>
+    <p><b>첫날 빼기 (만으로 세기)</b>: 1월 1일부터 10일 뒤는 1월 11일입니다. 법률상 기간과 D-day가 이 방식입니다.</p>
+    <p><b>첫날 포함 (기념일)</b>: 만난 날을 1일째로 세면 100일째는 99일 뒤입니다. 사귄 날, 아기 백일이 이 방식입니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>2026년 3월 1일부터 100일</b><br>첫날 빼기: 6월 9일(화) / 첫날 포함: 6월 8일(월)</div>
+    <div class="ex"><b>1월 31일부터 1개월 뒤</b><br>2월 31일이 없으므로 2월 말일(28일 또는 29일)</div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>영업일(평일)만 세려면요?</summary><p><a href="workdays.html">근무일수·영업일 계산기</a>를 쓰세요. 주말과 공휴일·대체공휴일을 뺍니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="dday.html">D-day 계산기</a><a href="workdays.html">근무일수·영업일 계산기</a><a href="age.html">만 나이 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>민법 제157조(초일 불산입), 제160조(월·연 단위 기간은 역에 따라 계산, 말일 없으면 그달 말일).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 한국 시간 기준 날짜로 계산합니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+var HOL = {"2026": ["01-01", "02-16", "02-17", "02-18", "03-01", "03-02", "05-01", "05-05", "05-24", "05-25", "06-03", "06-06", "07-17", "08-15", "08-17", "09-24", "09-25", "09-26", "10-03", "10-05", "10-09", "12-25"], "2027": ["01-01", "02-06", "02-07", "02-08", "02-09", "03-01", "05-01", "05-03", "05-05", "05-13", "06-06", "07-17", "07-19", "08-15", "08-16", "09-14", "09-15", "09-16", "10-03", "10-04", "10-09", "10-11", "12-25", "12-27"]};
+function pd(s){ if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return null; var p = s.split('-'); var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); return (d.getUTCMonth() === +p[1] - 1) ? d : null; }
+function fd(d){ return d.toISOString().slice(0, 10); }
+function addDays(d, n){ return new Date(d.getTime() + n * 86400000); }
+function diffDays(a, b){ return Math.round((b - a) / 86400000); }
+var WD = ['일','월','화','수','목','금','토'];
+function fdk(d){ return d.getUTCFullYear() + '년 ' + (d.getUTCMonth() + 1) + '월 ' + d.getUTCDate() + '일 (' + WD[d.getUTCDay()] + ')'; }
+function addPeriod(d, n, unit){
+  if (unit === 'd') return addDays(d, n);
+  if (unit === 'w') return addDays(d, n * 7);
+  var months = unit === 'm' ? n : n * 12, y = d.getUTCFullYear(), m = d.getUTCMonth() + months, day = d.getUTCDate();
+  var ty = y + Math.floor(m / 12), tm = ((m % 12) + 12) % 12, last = new Date(Date.UTC(ty, tm + 1, 0)).getUTCDate();
+  return new Date(Date.UTC(ty, tm, Math.min(day, last)));
+}
+function between(a, b, incl){
+  var days = diffDays(a, b), sign = days < 0 ? -1 : 1, x = sign > 0 ? a : b, y = sign > 0 ? b : a;
+  var months = (y.getUTCFullYear() - x.getUTCFullYear()) * 12 + y.getUTCMonth() - x.getUTCMonth();
+  if (y.getUTCDate() < x.getUTCDate()) months--;
+  var anchor = addPeriod(x, months, 'm'), rest = diffDays(anchor, y);
+  var total = Math.abs(days) + (incl ? 1 : 0);
+  return {days: days, total: total, weeks: Math.floor(total / 7), wrest: total % 7, months: months, mrest: rest};
+}
+// CALC-END
+
+function render(){
+  var mode = val('mode');
+  ['n','unit-0','sign-0'].forEach(function(id){ var el = $(id); if (el) el.closest('.row').style.display = mode==='add' ? '' : 'none'; });
+  $('d2').closest('.row').style.display = mode==='diff' ? '' : 'none';
+  var a = pd($('d1').value); if (!a){ empty('기준일을 고르면 결과가 여기에 나옵니다.'); return; }
+  var incl = $('incl').checked;
+  if (mode === 'add'){
+    var n = num('n'); if (!$('n').value){ empty('더할 기간을 입력해 주세요.'); return; }
+    var u = val('unit'), s = parseInt(val('sign'),10), k = n * s;
+    if (u === 'd' && incl) k = k - s;
+    var t = addPeriod(a, k, u);
+    show(fdk(a) + (s > 0 ? '부터 ' : '에서 ') + n.toLocaleString('ko-KR') + {d:'일',w:'주',m:'개월',y:'년'}[u] + (s > 0 ? ' 뒤' : ' 전'), fdk(t), null, (u === 'd' && incl) ? '첫날을 1일째로 셌습니다(100일 기념일 방식).' : '첫날을 빼고 셌습니다. 달 단위는 같은 날짜, 없으면 그달 말일입니다.');
+  } else {
+    var b = pd($('d2').value); if (!b){ empty('종료일을 골라 주세요.'); return; }
+    var r = between(a, b, incl);
+    show('두 날짜 사이', r.total.toLocaleString('ko-KR') + '일' + (incl ? ' (첫날 포함)' : ''), [['주로', r.weeks + '주 ' + r.wrest + '일'], ['개월로', r.months + '개월 ' + r.mrest + '일'], ['방향', r.days < 0 ? '종료일이 기준일보다 앞' : '기준일 → 종료일']], null);
+  }
+}
+(function(){ var t = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10); if (!$('d1').value) $('d1').value = t; })();
+bind();
+</script>
+</body>
+</html>

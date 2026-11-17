@@ -101,6 +101,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size
       <tr><td>조합 예탁금 (3,000만 원까지)</td><td>0%</td><td>농특세 1.4%</td><td>1.4%</td></tr>
       <tr><td>비과세종합저축 (만 65세 이상 등, 5,000만 원까지)</td><td>0%</td><td>0%</td><td>0%</td></tr>
     </tbody></table>
+    <p>2025년 12월 세법 개정으로 총급여 7,000만 원(종합소득금액 6,000만 원)을 넘는 농협·수협·산림조합 준조합원과 신협·새마을금고 회원의 예탁금 이자는 2026년 5%, 2027년부터 9%로 분리과세합니다. 농·어민 조합원과 기준 이하 가입자는 1.4%가 유지됩니다.</p>
     <h2>계산 예시</h2>
     <div class="ex"><b>정기예금 이자 100만 원</b><br>소득세 14만 + 지방세 1만 4천 = 15만 4천 원 → 실수령 <b>84만 6천 원</b></div>
     <div class="ex"><b>조합 예탁금 이자 100만 원</b><br>농특세 1만 4천 원 → 실수령 <b>98만 6천 원</b></div>
@@ -145,8 +146,8 @@ function bind(){
 
 function interestTax(amt, kind){
   if (kind === 'free') return {tax: 0, local: 0, farm: 0, total: 0, net: amt};
-  if (kind === 'coop'){ var farm = Math.floor(amt * 0.014 / 10) * 10; return {tax: 0, local: 0, farm: farm, total: farm, net: amt - farm}; }
-  var tax = Math.floor(amt * 0.14 / 10) * 10, local = Math.floor(tax * 0.1 / 10) * 10;
+  if (kind === 'coop'){ var farm = Math.floor(amt * 0.014 / 10 + 1e-7) * 10; return {tax: 0, local: 0, farm: farm, total: farm, net: amt - farm}; }
+  var tax = Math.floor(amt * 0.14 / 10 + 1e-7) * 10, local = Math.floor(tax * 0.1 / 10 + 1e-7) * 10;
   return {tax: tax, local: local, farm: 0, total: tax + local, net: amt - tax - local};
 }
 // CALC-END
@@ -158,7 +159,7 @@ function render(){
   if(k==='normal') list.push(['이자소득세 (14%)', '−'+won(r.tax)],['지방소득세 (1.4%)', '−'+won(r.local)]);
   if(k==='coop') list.push(['농어촌특별세 (1.4%)', '−'+won(r.farm)]);
   list.push(['떼는 세금 합계', '−'+won(r.total)]);
-  show('실제로 받는 금액', won(r.net), list, '이자·배당을 합쳐 1년에 2,000만 원을 넘으면 다음 해 5월 종합소득세 신고 대상(금융소득종합과세)입니다.');
+  show('실제로 받는 금액', won(r.net), list, (k==='coop' ? '총급여 7,000만 원(종합소득금액 6,000만 원)을 넘는 준조합원·신협·새마을금고 회원은 2026년부터 1.4%가 아니라 저율 분리과세(2026년 5%, 2027년 9%)라 이 계산보다 세금이 많습니다. ' : '') + '이자·배당을 합쳐 1년에 2,000만 원을 넘으면 다음 해 5월 종합소득세 신고 대상(금융소득종합과세)입니다.');
 }
 bind();
 </script>

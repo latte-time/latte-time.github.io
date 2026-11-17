@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구독료 계산기 – OTT·음악·쇼핑 멤버십 월·연간 총액과 연간 결제 절약액 | 라떼타임 계산기</title>
+<meta name="description" content="넷플릭스·유튜브 프리미엄·쿠팡 와우 등 구독 서비스 요금을 넣으면 한 달·1년·5년 구독료 총액을 계산하고, 연간 결제로 바꿀 때 아끼는 금액을 비교합니다.">
+<link rel="canonical" href="https://latte-time.github.io/subscription.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="구독료 계산기 – OTT·음악·쇼핑 멤버십 월·연간 총액과 연간 결제 절약액">
+<meta property="og:description" content="넷플릭스·유튜브 프리미엄·쿠팡 와우 등 구독 서비스 요금을 넣으면 한 달·1년·5년 구독료 총액을 계산하고, 연간 결제로 바꿀 때 아끼는 금액을 비교합니다.">
+<meta property="og:url" content="https://latte-time.github.io/subscription.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="shopping.html">소비·쇼핑</a> › 구독료</nav>
+</div></header>
+<main class="wrap">
+  <h1>구독료 계산기</h1>
+  <p class="lead">매달 빠져나가는 구독료를 모아 1년에 얼마인지, 연간 결제가 얼마나 싼지 계산합니다.</p>
+  <section class="calc" aria-label="구독료 계산">
+<div class="row"><label class="label" for="s1">구독 1</label><div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="money"><input id="n1" placeholder="예: 넷플릭스" autocomplete="off"></div><div class="money"><input id="s1" class="num" inputmode="numeric" autocomplete="off" placeholder="월 요금"><span>원</span></div></div></div>
+<div class="row"><label class="label" for="s2">구독 2</label><div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="money"><input id="n2" placeholder="예: 유튜브 프리미엄" autocomplete="off"></div><div class="money"><input id="s2" class="num" inputmode="numeric" autocomplete="off" placeholder="월 요금"><span>원</span></div></div></div>
+<div class="row"><label class="label" for="s3">구독 3</label><div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="money"><input id="n3" placeholder="예: 쿠팡 와우" autocomplete="off"></div><div class="money"><input id="s3" class="num" inputmode="numeric" autocomplete="off" placeholder="월 요금"><span>원</span></div></div></div>
+<div class="row"><label class="label" for="s4">구독 4</label><div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="money"><input id="n4" placeholder="예: 음악" autocomplete="off"></div><div class="money"><input id="s4" class="num" inputmode="numeric" autocomplete="off" placeholder="월 요금"><span>원</span></div></div></div>
+<div class="row"><label class="label" for="s5">구독 5</label><div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="money"><input id="n5" placeholder="예: 클라우드" autocomplete="off"></div><div class="money"><input id="s5" class="num" inputmode="numeric" autocomplete="off" placeholder="월 요금"><span>원</span></div></div></div>
+<div class="row"><label class="label" for="s6">구독 6</label><div class="two" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="money"><input id="n6" placeholder="예: 기타" autocomplete="off"></div><div class="money"><input id="s6" class="num" inputmode="numeric" autocomplete="off" placeholder="월 요금"><span>원</span></div></div></div>
+<div class="row" style="margin-top:18px"><span class="label" style="font-size:16px;color:var(--brand)">연간 결제 비교 (선택)</span></div>
+<div class="row"><label class="label" for="m1">월 결제 요금</label><div class="money"><input id="m1" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 14,900"><span>원</span></div></div>
+<div class="row"><label class="label" for="y1">연간 결제 요금</label><div class="money"><input id="y1" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 149,000"><span>원</span></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>구독료 점검 방법</h2>
+    <p>카드 명세서에서 매달 같은 날 빠지는 결제를 모두 찾아 넣으세요. 1년 합계를 보면 잘 쓰지 않는 구독이 눈에 띕니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>월 13,500 + 14,900 + 7,890 + 10,900원</b><br>한 달 47,190원 → <b>1년 566,280원</b>, 5년 2,831,400원</div>
+    <div class="ex"><b>월 14,900원 vs 연 149,000원</b><br>월 결제 1년 178,800원 → 연간 결제가 <b>29,800원(16.7%) 절약</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>해외 결제 구독은요?</summary><p>달러로 결제되는 구독은 환율과 해외 결제 수수료(1% 안팎)가 붙습니다. <a href="exchange.html">환율 계산기</a>로 원화 금액을 확인해 넣으세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="phone-plan.html">휴대폰 선택약정 계산기</a><a href="rental.html">렌탈 vs 일시불 계산기</a><a href="discount.html">할인율·실구매가 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>단순 합계 계산.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 요금은 서비스마다 바뀔 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function subTotal(list){ var m = list.reduce(function(a, b){ return a + (b || 0); }, 0); return {month: m, year: m * 12, five: m * 60}; }
+function annualSave(monthly, yearly){ var y = monthly * 12; return {monthlyYear: y, save: y - yearly, rate: y ? (y - yearly) / y * 100 : 0}; }
+// CALC-END
+
+function render(){
+  var vals = [], names = [];
+  for (var i = 1; i <= 6; i++){ vals.push(num('s'+i)); names.push($('n'+i).value || ('구독 ' + i)); }
+  var t = subTotal(vals), m1 = num('m1'), y1 = num('y1');
+  if (!t.month && !(m1 && y1)){ empty('구독 요금을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var list = [];
+  vals.forEach(function(v, i){ if (v) list.push([names[i].replace(/</g,'&lt;'), won(v) + ' / 월 · ' + won(v * 12) + ' / 년']); });
+  if (t.month) list.push(['1년 합계', won(t.year)], ['5년 합계', won(t.five)]);
+  if (m1 && y1){ var a = annualSave(m1, y1); list.push(['연간 결제로 바꾸면', (a.save >= 0 ? won(a.save) + ' 절약 (' + a.rate.toFixed(1) + '%)' : won(-a.save) + ' 더 비쌈')]); }
+  show('한 달 구독료 합계', won(t.month), list, '부가세 포함 결제 금액 기준입니다. 가족 공유 요금제는 1인 몫으로 나눠 넣으세요.');
+}
+bind();
+</script>
+</body>
+</html>

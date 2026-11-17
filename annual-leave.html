@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>연차 계산기 – 입사일 기준 연차 일수·미사용 연차수당 | 라떼타임 계산기</title>
+<meta name="description" content="입사일과 기준일을 넣으면 근로기준법에 따른 연차유급휴가 일수(1년 미만 월 1일, 1년 15일, 2년마다 1일 가산, 최대 25일)와 미사용 연차수당을 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/annual-leave.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="연차 계산기 – 입사일 기준 연차 일수·미사용 연차수당">
+<meta property="og:description" content="입사일과 기준일을 넣으면 근로기준법에 따른 연차유급휴가 일수(1년 미만 월 1일, 1년 15일, 2년마다 1일 가산, 최대 25일)와 미사용 연차수당을 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/annual-leave.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="salary.html">급여·근로</a> › 연차</nav>
+</div></header>
+<main class="wrap">
+  <h1>연차 계산기 (연차 일수·연차수당)</h1>
+  <p class="lead">입사일만 넣으면 올해 생기는 연차 일수를, 시급을 더 넣으면 쓰지 못한 연차의 수당까지 계산합니다.</p>
+  <section class="calc" aria-label="연차 계산">
+<div class="two"><div class="row"><label class="label" for="start">입사일</label><div class="money"><input type="date" id="start"></div></div><div class="row"><label class="label" for="base">계산 기준일</label><div class="money"><input type="date" id="base"></div><div class="hint">비워 두면 오늘</div></div></div>
+<div class="two"><div class="row"><label class="label" for="wage">통상시급 <small>(선택)</small></label><div class="money"><input id="wage" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 12,000"><span>원</span></div></div><div class="row"><label class="label" for="hours">1일 소정근로시간</label><div class="money"><input id="hours" class="dec" inputmode="decimal" autocomplete="off" placeholder="8"><span>시간</span></div></div></div>
+<div class="row"><label class="label" for="unused">쓰지 못한 연차 <small>(선택)</small></label><div class="money"><input id="unused" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 5"><span>일</span></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>연차 일수 계산 기준</h2>
+    <table class="rate"><thead><tr><th>근속 기간</th><th>연차 일수</th></tr></thead><tbody>
+      <tr><td>1년 미만</td><td>1개월 개근할 때마다 1일 (최대 11일)</td></tr>
+      <tr><td>1년 이상 (출근율 80% 이상)</td><td>15일</td></tr>
+      <tr><td>3년 이상</td><td>최초 1년을 넘는 근속 2년마다 1일 가산 (최대 25일)</td></tr>
+    </tbody></table>
+    <table class="rate"><thead><tr><th>근속</th><th>1년</th><th>3년</th><th>5년</th><th>11년</th><th>21년 이상</th></tr></thead><tbody>
+      <tr><td>연차</td><td>15일</td><td>16일</td><td>17일</td><td>20일</td><td>25일</td></tr>
+    </tbody></table>
+    <h2>미사용 연차수당</h2>
+    <p>연차를 다 쓰지 못하고 사용 기간이 끝나면 남은 일수만큼 수당을 받습니다. <b>연차수당 = 통상시급 × 1일 소정근로시간 × 미사용 일수</b>입니다. 회사가 법에 정한 절차로 연차 사용을 촉진했는데도 쓰지 않았다면 수당이 없을 수 있습니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>2023년 3월 2일 입사, 2026년 3월 2일 기준</b><br>근속 3년 → 연차 <b>16일</b></div>
+    <div class="ex"><b>통상시급 12,000원 · 1일 8시간 · 미사용 5일</b><br>12,000 × 8 × 5 = 연차수당 <b>480,000원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>회사가 회계연도(1월 1일) 기준으로 주는데요?</summary><p>회사는 취업규칙에 따라 회계연도 기준으로 연차를 줄 수 있습니다. 다만 퇴사할 때 입사일 기준으로 다시 계산해 근로자에게 불리하면 차이를 정산해야 합니다. 이 계산기는 입사일 기준입니다.</p></details>
+    <details><summary>5명 미만 사업장도 연차가 있나요?</summary><p>상시 근로자 5명 미만 사업장에는 연차유급휴가 규정이 적용되지 않습니다.</p></details>
+    <details><summary>1년 미만 때 생긴 연차는 언제까지 써야 하나요?</summary><p>입사일부터 1년 안에 써야 합니다. 그 뒤에는 1년 이상 근속에 따른 15일이 새로 생깁니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="severance.html">퇴직금 계산기</a><a href="juhyu.html">주휴수당 계산기</a><a href="overtime.html">연장·야간·휴일수당</a></div>
+    <h2>기준과 출처</h2>
+    <p>근로기준법 제60조(연차 유급휴가), 제61조(연차 유급휴가의 사용 촉진), 같은 법 시행령 제7조(5명 미만 사업장 적용 범위, 별표1).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 단체협약·취업규칙이 법보다 유리하면 그 기준을 따릅니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function monthsBetween(a, b){
+  var m = (b[0] - a[0]) * 12 + (b[1] - a[1]);
+  if (b[2] < a[2]) m -= 1;
+  return m;
+}
+function leaveDays(years){ return years < 1 ? 0 : Math.min(15 + Math.floor((years - 1) / 2), 25); }
+function annualLeave(startStr, baseStr){
+  var a = startStr.split('-').map(Number), b = baseStr.split('-').map(Number);
+  var months = monthsBetween(a, b);
+  if (months < 0) return null;
+  var years = Math.floor(months / 12);
+  return {months: months, years: years, firstYear: Math.min(months, 11), days: years < 1 ? Math.min(months, 11) : leaveDays(years)};
+}
+// CALC-END
+
+function todayStr(){ var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+function render(){
+  var s = $('start').value, b = $('base').value || todayStr();
+  if (!s){ empty('입사일을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var r = annualLeave(s, b);
+  if (!r){ empty('기준일이 입사일보다 늦어야 합니다.'); return; }
+  var list = [['근속 기간', r.years + '년 ' + (r.months % 12) + '개월']];
+  var big, sub;
+  if (r.years < 1){ sub = '지금까지 생긴 연차 (1년 미만, 매월 개근 기준)'; big = r.days + '일'; list.push(['1년 미만 연차 최대', '11일']); }
+  else { sub = '올해 생기는 연차 (근속 만 ' + r.years + '년 기준)'; big = r.days + '일'; list.push(['다음 해 연차', leaveDays(r.years + 1) + '일']); }
+  var w = num('wage'), h = num('hours') || 8, u = num('unused');
+  if (w) list.push(['1일 통상임금', won(w * h)]);
+  if (w && u) list.push(['미사용 연차수당 (' + u + '일)', won(w * h * u)]);
+  show(sub, big, list, '상시 5명 이상 사업장 기준입니다. 1년 이상 근속자는 지난 1년 출근율이 80% 이상일 때 15일 이상이 생기고, 80% 미만이면 개근한 달마다 1일씩 생깁니다.');
+}
+bind();
+</script>
+</body>
+</html>

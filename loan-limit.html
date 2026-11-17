@@ -155,12 +155,12 @@ function pvAnnuity(monthly, ratePct, years){
 }
 function loanLimit(o){
   var ltvPct = LTV[o.area][o.who];
-  var byLtv = Math.floor(o.price * ltvPct / 100);
+  var byLtv = Math.floor(o.price * ltvPct / 100 + 1e-6);
   var cap = Infinity;
   if (o.area !== 'local') cap = o.price <= 15e8 ? 6e8 : (o.price <= 25e8 ? 4e8 : 2e8);
   var stress = STRESS[o.area];
   var yearly = Math.max(0, o.inc * 0.4 - o.debt);
-  var byDsr = Math.floor(pvAnnuity(yearly / 12, o.rate + stress, o.term) / 1e4) * 1e4;
+  var byDsr = Math.floor(pvAnnuity(yearly / 12, o.rate + stress, o.term) / 1e4 + 1e-7) * 1e4;
   var limit = Math.max(0, Math.min(byLtv, cap, byDsr));
   var by = limit === byLtv ? 'LTV' : (limit === cap ? '주담대 금액 한도' : 'DSR');
   return {ltvPct: ltvPct, byLtv: byLtv, cap: cap, stress: stress, byDsr: byDsr, limit: limit, by: by};

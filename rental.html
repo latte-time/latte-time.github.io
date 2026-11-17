@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>렌탈 vs 일시불 계산기 – 정수기·안마의자·가전 렌탈 총비용 비교 | 라떼타임 계산기</title>
+<meta name="description" content="일시불 가격과 관리·필터 비용, 렌탈 월 요금과 약정 기간을 넣으면 렌탈과 일시불 구매의 총비용 차이와 손익분기 개월을 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/rental.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="렌탈 vs 일시불 계산기 – 정수기·안마의자·가전 렌탈 총비용 비교">
+<meta property="og:description" content="일시불 가격과 관리·필터 비용, 렌탈 월 요금과 약정 기간을 넣으면 렌탈과 일시불 구매의 총비용 차이와 손익분기 개월을 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/rental.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="shopping.html">소비·쇼핑</a> › 렌탈 vs 일시불</nav>
+</div></header>
+<main class="wrap">
+  <h1>렌탈 vs 일시불 계산기</h1>
+  <p class="lead">정수기·공기청정기·안마의자 같은 가전을 렌탈할지 사서 쓸지 총비용으로 비교합니다.</p>
+  <section class="calc" aria-label="렌탈 vs 일시불 계산">
+<div class="row" style="margin-top:18px"><span class="label" style="font-size:16px;color:var(--brand)">렌탈</span></div>
+<div class="row"><label class="label" for="rent">월 렌탈료</label><div class="money"><input id="rent" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 39,900"><span>원</span></div></div>
+<div class="row"><label class="label" for="months">약정 기간</label><div class="money"><select id="months"><option value="12">12개월 (1년)</option><option value="24">24개월 (2년)</option><option value="36">36개월 (3년)</option><option value="48">48개월 (4년)</option><option value="60" selected>60개월 (5년)</option><option value="72">72개월 (6년)</option></select></div></div>
+<div class="row"><label class="label" for="rentEtc">렌탈 등록비·설치비</label><div class="money"><input id="rentEtc" class="num" inputmode="numeric" autocomplete="off" placeholder="없으면 비움"><span>원</span></div></div>
+<div class="row"><label class="label" for="cardOff">카드 제휴 할인 (월)</label><div class="money"><input id="cardOff" class="num" inputmode="numeric" autocomplete="off" placeholder="없으면 비움"><span>원</span></div></div>
+<div class="row" style="margin-top:18px"><span class="label" style="font-size:16px;color:var(--brand)">일시불</span></div>
+<div class="row"><label class="label" for="buy">구매 가격</label><div class="money"><input id="buy" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 1,290,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="care">관리비·필터 교체비 (연)</label><div class="money"><input id="care" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 120,000"><span>원</span></div><div class="hint">렌탈료에 포함된 방문관리·소모품을 직접 살 때 드는 1년 비용.</div></div>
+<div class="row"><label class="label" for="useYears">사용 예정 기간</label><div class="money"><input id="useYears" class="dec" inputmode="decimal" autocomplete="off" placeholder="약정 기간과 같으면 비움"><span>년</span></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>계산 방법</h2>
+    <p><b>렌탈 총비용</b> = (월 렌탈료 − 카드 할인) × 약정 개월 + 등록비<br><b>일시불 총비용</b> = 구매 가격 + 연 관리비 × 약정 연수</p>
+    <p>손익분기 개월 = 구매 가격 ÷ (월 렌탈료 − 월 관리비). 이보다 오래 쓰면 사는 쪽이 이득입니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>정수기 렌탈 월 39,900원 × 60개월 vs 구매 129만 원 + 필터 연 12만 원</b><br>렌탈 2,394,000원 vs 일시불 1,890,000원 → <b>일시불이 504,000원 쌈</b>, 약 44개월부터 일시불이 이득</div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>렌탈이 더 나은 경우는요?</summary><p>목돈이 없거나, 이사·결혼 등으로 사용 기간이 짧을 수 있거나, 카드 제휴 할인으로 월 요금이 크게 줄어드는 경우입니다. 중도 해지 위약금 조건을 먼저 확인하세요.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="installment.html">카드 할부 수수료 계산기</a><a href="subscription.html">구독료 계산기</a><a href="electricity.html">가전 전기요금 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>단순 합계 비교.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 렌탈 약관(위약금·소유권 이전 시점)을 함께 확인하세요. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function rentalVsBuy(o){
+  var m = o.months, rentTotal = (o.rent - (o.cardOff || 0)) * m + (o.rentEtc || 0);
+  var years = o.useYears || m / 12, buyTotal = o.buy + o.care * (m / 12);
+  var monthlyGap = (o.rent - (o.cardOff || 0)) - o.care / 12;
+  var be = monthlyGap > 0 ? Math.ceil(((o.buy - (o.rentEtc || 0)) / monthlyGap) - 1e-9) : null;
+  return {rentTotal: rentTotal, buyTotal: buyTotal, diff: rentTotal - buyTotal, breakEven: be, years: years};
+}
+// CALC-END
+
+function render(){
+  var r0 = num('rent'), b = num('buy');
+  if (!r0 || !b){ empty('월 렌탈료와 구매 가격을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var r = rentalVsBuy({rent:r0, months:parseInt($('months').value,10), rentEtc:num('rentEtc'), cardOff:num('cardOff'), buy:b, care:num('care'), useYears:num('useYears')});
+  var head = r.diff > 0 ? '일시불이 ' + won(r.diff) + ' 쌉니다' : r.diff < 0 ? '렌탈이 ' + won(-r.diff) + ' 쌉니다' : '총비용이 같습니다';
+  show('약정 기간 총비용 비교', head, [['렌탈 총비용', won(r.rentTotal)], ['일시불 + 관리비', won(r.buyTotal)], ['손익분기', r.breakEven ? r.breakEven + '개월부터 일시불이 이득' : '렌탈이 계속 유리']],
+    '렌탈은 약정이 끝나면 보통 소유권이 넘어옵니다. 고장 수리·방문관리 편의, 중도 해지 위약금, 일시불 할부 이자는 넣지 않았습니다.');
+}
+bind();
+</script>
+</body>
+</html>

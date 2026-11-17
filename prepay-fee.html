@@ -141,7 +141,7 @@ function bind(){
 function daysBetween(a, b){ return Math.round((b - a) / 86400000); }
 function prepayFee(amount, ratePct, elapsed, termDays){
   var remain = Math.max(0, termDays - elapsed);
-  var fee = Math.floor(amount * ratePct / 100 * remain / termDays);
+  var fee = Math.floor(amount * ratePct / 100 * remain / termDays + 1e-6);
   return {remain: remain, fee: fee};
 }
 // CALC-END

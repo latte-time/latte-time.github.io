@@ -227,7 +227,7 @@ function brokerageFee(input){
   } else {
     rate = 0.009; negotiable = true;
   }
-  var raw = Math.floor(base * rate);
+  var raw = Math.floor(base * rate + 1e-6);
   var fee = (cap !== null && raw > cap) ? cap : raw;
   return {base: base, converted: converted, rate: rate, cap: cap, raw: raw, fee: fee, capped: cap !== null && raw > cap, negotiable: negotiable};
 }
@@ -258,7 +258,7 @@ function brokerageFee(input){
     var box = $('result');
     if (!price && !(deal === 'wolse' && rent)) { box.innerHTML = '<div class="sub">금액을 입력하면 결과가 여기에 나옵니다.</div>'; return; }
     var r = brokerageFee({prop: prop, deal: deal, price: price, rent: rent});
-    var vat = $('vat').checked, total = vat ? Math.floor(r.fee * 1.1) : r.fee;
+    var vat = $('vat').checked, total = vat ? Math.floor(r.fee * 1.1 + 1e-6) : r.fee;
     var rows = '';
     if (deal === 'wolse') rows += '<tr><td>환산 거래금액 (보증금 + 월세 × ' + r.converted + ')</td><td>' + man(r.base) + '</td></tr>';
     else rows += '<tr><td>거래금액</td><td>' + man(r.base) + '</td></tr>';

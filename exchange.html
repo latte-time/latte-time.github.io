@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>환율 계산기 – 달러·엔·유로·위안 원화 환산 (매일 갱신 기준환율) | 라떼타임 계산기</title>
+<meta name="description" content="달러, 엔, 유로, 위안 등 14개 통화를 원화로, 원화를 외화로 바꿔 계산합니다. 유럽중앙은행 등 기관 기준환율을 매일 불러오고, 은행 환전 수수료(스프레드)도 반영할 수 있습니다.">
+<link rel="canonical" href="https://latte-time.github.io/exchange.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="환율 계산기 – 달러·엔·유로·위안 원화 환산 (매일 갱신 기준환율)">
+<meta property="og:description" content="달러, 엔, 유로, 위안 등 14개 통화를 원화로, 원화를 외화로 바꿔 계산합니다. 유럽중앙은행 등 기관 기준환율을 매일 불러오고, 은행 환전 수수료(스프레드)도 반영할 수 있습니다.">
+<meta property="og:url" content="https://latte-time.github.io/exchange.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="loan.html">대출·금융</a> › 환율</nav>
+</div></header>
+<main class="wrap">
+  <h1>환율 계산기</h1>
+  <p class="lead">외화를 원화로, 원화를 외화로 바꿔 계산합니다. 환율은 페이지를 열 때 하루 1회 갱신되는 기준환율을 불러옵니다.</p>
+  <section class="calc" aria-label="환율 계산">
+<div class="row"><label class="label" for="cur">통화</label><div class="money"><select id="cur"><option value="USD" selected>USD 미국 달러</option><option value="JPY">JPY 일본 엔 (100엔)</option><option value="EUR">EUR 유로</option><option value="CNY">CNY 중국 위안</option><option value="GBP">GBP 영국 파운드</option><option value="AUD">AUD 호주 달러</option><option value="CAD">CAD 캐나다 달러</option><option value="HKD">HKD 홍콩 달러</option><option value="SGD">SGD 싱가포르 달러</option><option value="THB">THB 태국 바트</option><option value="PHP">PHP 필리핀 페소</option><option value="IDR">IDR 인도네시아 루피아 (100루피아)</option><option value="CHF">CHF 스위스 프랑</option><option value="NZD">NZD 뉴질랜드 달러</option></select></div></div>
+<div class="row"><span class="label">방향</span><div class="seg" role="radiogroup"><input type="radio" name="dir" id="dir-0" value="to" checked><label for="dir-0">외화 금액 → 필요한 원화</label><input type="radio" name="dir" id="dir-1" value="from"><label for="dir-1">원화 → 바꿀 수 있는 외화</label></div></div>
+<div class="row"><label class="label" for="amt">금액</label><div class="money"><input id="amt" class="dec" inputmode="decimal" autocomplete="off" placeholder="예: 100"><span></span></div></div>
+<div class="row"><label class="label" for="rate">적용 환율 (1단위당 원)</label><div class="money"><input id="rate" class="dec" inputmode="decimal" autocomplete="off" placeholder="불러오는 중…"><span>원</span></div><div class="hint"><span id="fxinfo">기준환율을 불러오는 중입니다.</span></div></div>
+<div class="row"><label class="label" for="spread">환전 수수료(스프레드)</label><div class="money"><input id="spread" class="dec" inputmode="decimal" autocomplete="off" placeholder=""><span>%</span></div><div class="hint">외화를 살 때 기준입니다. 은행 현찰은 보통 기준환율보다 1~2% 비쌉니다. 외화를 팔 때는 그만큼 싸게 쳐 주니 이 칸을 비우고 결과에서 빼서 보세요.</div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>환율 정보는 어디서 오나요?</h2>
+    <p>페이지를 열 때 Frankfurter 서비스에서 유럽중앙은행 등 공공기관이 고시한 기준환율을 불러옵니다. 평일 하루 한 번 바뀌며, 주말·휴일에는 직전 영업일 값입니다. 실시간 시세가 아니므로 은행 매매기준율과 소수점 차이가 날 수 있습니다.</p>
+    <h2>은행에서 바꿀 때 차이</h2>
+    <p>은행은 기준환율에 수수료(스프레드)를 더해 팝니다. 현찰은 보통 1.75% 안팎, 송금은 1% 안팎이며, 환율 우대 90%면 이 수수료의 90%를 깎아 줍니다.</p>
+    <div class="ex"><b>100달러, 기준환율 1,380원, 현찰 수수료 1.75%</b><br>1,380 × 1.0175 = 1,404.15원 → <b>140,415원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>엔화는 왜 100엔 기준인가요?</summary><p>우리나라 은행은 엔화와 루피아를 100단위로 고시합니다. 계산기도 같은 기준으로 보여 줍니다.</p></details>
+    <details><summary>해외직구 세금 계산에도 쓸 수 있나요?</summary><p>관세는 관세청 과세환율(주 단위 고시)로 계산합니다. <a href="customs.html">해외직구 관부가세 계산기</a>에서 이 환율을 참고값으로 씁니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="customs.html">해외직구 관부가세 계산기</a><a href="foreign-stock-tax.html">해외주식 양도세 계산기</a><a href="unit-price.html">단위가격 비교 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>환율: Frankfurter API(api.frankfurter.dev, 유럽중앙은행 등 기관 기준환율, 평일 하루 1회 갱신). 엔·루피아 100단위 표기는 국내 은행 고시 관행.</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 환전·송금 금액은 은행 고시 환율과 우대율에 따라 다릅니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+var FX_UNIT = {JPY: 100, IDR: 100};
+function fxConvert(dir, amt, rate, spread){
+  var eff = dir === 'to' ? rate * (1 + spread / 100) : rate * (1 + spread / 100);
+  return dir === 'to' ? {value: amt * eff, eff: eff} : {value: eff ? amt / eff : 0, eff: eff};
+}
+function fxRatesFromKRW(j){
+  // base=KRW 응답 → 통화별 1단위(엔·루피아는 100단위)당 원
+  var out = {}, date = null, put = function(q, r){ if (r) out[q] = (FX_UNIT[q] || 1) / r; };
+  if (Array.isArray(j)) { j.forEach(function(e){ put(e.quote, e.rate); date = e.date; }); }
+  else if (j && j.rates) { for (var q in j.rates) put(q, j.rates[q]); date = j.date; }
+  return {rates: out, date: date};
+}
+// CALC-END
+
+var FX = null;
+function render(){
+  var c = $('cur').value, a = num('amt'), r = num('rate'), d = val('dir'), u = FX_UNIT[c] || 1, unitName = (u === 100 ? '100 ' : '') + c;
+  if (!a){ empty('금액을 입력하면 결과가 여기에 나옵니다.'); return; }
+  if (!r){ empty('적용 환율을 입력해 주세요.'); return; }
+  var res = fxConvert(d, a, r, num('spread'));
+  if (d === 'to') show(a.toLocaleString('ko-KR') + ' ' + c + ' =', won(res.value), [['적용 환율', unitName + ' = ' + res.eff.toFixed(2) + '원']], null);
+  else show(won(a) + ' =', (res.value * u).toLocaleString('ko-KR', {maximumFractionDigits: 2}) + ' ' + c, [['적용 환율', unitName + ' = ' + res.eff.toFixed(2) + '원']], null);
+}
+function fxFill(){ var c = $('cur').value; if (FX && FX.rates[c]) { $('rate').value = FX.rates[c].toFixed(2); } render(); }
+$('cur').addEventListener('change', fxFill);
+fxFetch('KRW', 'USD,JPY,EUR,CNY,GBP,AUD,CAD,HKD,SGD,THB,PHP,IDR,CHF,NZD', function(j){
+  if (j) FX = fxRatesFromKRW(j);
+  if (FX && FX.date) { $('fxinfo').textContent = FX.date + ' 기준환율(Frankfurter, 유럽중앙은행 등 기관 고시). 은행 매매기준율과 소수점 차이가 날 수 있습니다.'; fxFill(); }
+  else { $('fxinfo').textContent = '환율을 불러오지 못했습니다. 은행 고시 환율을 직접 입력하세요.'; $('rate').placeholder = '예: 1,380'; }
+});
+
+function fxParse(j, quote){
+  if (Array.isArray(j)) { for (var i = 0; i < j.length; i++) if (j[i].quote === quote) return {rate: j[i].rate, date: j[i].date}; return null; }
+  if (j && j.rates && j.rates[quote]) return {rate: j.rates[quote], date: j.date};
+  return null;
+}
+function fxFetch(base, quotes, cb){
+  var done = false, fin = function(j){ if (!done){ done = true; cb(j); } };
+  try {
+    fetch('https://api.frankfurter.dev/v2/rates?base=' + base + '&quotes=' + quotes).then(function(r){ if (!r.ok) throw 0; return r.json(); }).then(fin)
+    .catch(function(){ fetch('https://api.frankfurter.dev/v1/latest?from=' + base + '&to=' + quotes).then(function(r){ return r.json(); }).then(fin).catch(function(){ fin(null); }); });
+  } catch (e) { fin(null); }
+}
+bind();
+</script>
+</body>
+</html>

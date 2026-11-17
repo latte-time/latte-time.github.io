@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해외주식 양도소득세 계산기 – 250만 원 공제, 22% 세율 | 라떼타임 계산기</title>
+<meta name="description" content="1년 동안 판 해외주식의 양도가액, 취득가액, 수수료를 넣으면 기본공제 250만 원을 뺀 양도소득세 20%와 지방소득세 2%를 계산합니다.">
+<link rel="canonical" href="https://latte-time.github.io/foreign-stock-tax.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="해외주식 양도소득세 계산기 – 250만 원 공제, 22% 세율">
+<meta property="og:description" content="1년 동안 판 해외주식의 양도가액, 취득가액, 수수료를 넣으면 기본공제 250만 원을 뺀 양도소득세 20%와 지방소득세 2%를 계산합니다.">
+<meta property="og:url" content="https://latte-time.github.io/foreign-stock-tax.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="라떼타임 계산기">
+<meta property="og:image" content="https://latte-time.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118721875526313" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#faf6f1;--card:#fff;--ink:#2b211b;--muted:#6f5f53;--brand:#6b4a35;--line:#e8ddd2;--soft:#f3ebe2;--accent:#b5835a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.7;font-size:16px}
+a{color:var(--brand)}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.site{background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;color:var(--brand);text-decoration:none;font-size:18px;letter-spacing:-.3px}
+.crumb{font-size:14px;color:var(--muted)} .crumb a{color:var(--muted);text-decoration:none}
+h1{font-size:26px;line-height:1.35;margin:28px 0 6px;letter-spacing:-.5px}
+.lead{color:var(--muted);margin:0 0 20px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.row{margin-bottom:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.label small{font-weight:400;color:var(--muted)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1 1 0;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff;font-size:15px;line-height:1.35}
+.seg input:checked + label{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.money{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.money input,.money select{flex:1;border:0;padding:12px 14px;font-size:17px;font-family:inherit;color:var(--ink);min-width:0;text-align:right;background:#fff}
+.money select{text-align:left}
+.money input[type=date]{text-align:left}
+.money input:focus,.money select:focus{outline:none}
+.money:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px rgba(107,74,53,.15)}
+.money span{padding:0 14px;color:var(--muted);font-size:15px;white-space:nowrap}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.result{margin-top:20px;background:var(--soft);border-radius:12px;padding:18px}
+.result .big{font-size:28px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.result .sub{font-size:15px;color:var(--muted)}
+.result table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.result td{padding:6px 0;border-top:1px solid var(--line)} .result td:last-child{text-align:right;font-weight:600}
+.result .sched{max-height:320px;overflow:auto;margin-top:12px;background:#fff;border-radius:8px}
+.result .sched table{margin:0;font-size:13.5px}
+.result .sched th{position:sticky;top:0;background:#fff;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+.result .sched td{padding:5px 8px;text-align:right;font-weight:400}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+article{margin:34px 0}
+article h2{font-size:21px;margin:34px 0 10px;letter-spacing:-.3px}
+article h3{font-size:17px;margin:22px 0 6px}
+article ul{padding-left:20px;margin:6px 0 12px}
+article li{margin:4px 0;line-height:1.7}
+table.rate{width:100%;border-collapse:collapse;background:#fff;font-size:14.5px;border:1px solid var(--line)}
+table.rate th,table.rate td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.rate th{background:var(--soft)}
+.ex{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:10px 0}
+.ex b{color:var(--brand)}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.more a{display:block;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:var(--ink);font-size:15px}
+.disclaimer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;font-size:13px;color:var(--muted);text-align:center}
+.flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:8px}.flinks a{color:var(--muted);text-decoration:none}
+@media (max-width:520px){h1{font-size:22px}.result .big{font-size:24px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="index.html">라떼타임</a>
+  <nav class="crumb"><a href="index.html">홈</a> › <a href="tax.html">세금</a> › 해외주식 양도세</nav>
+</div></header>
+<main class="wrap">
+  <h1>해외주식 양도소득세 계산기</h1>
+  <p class="lead">한 해 동안 해외주식을 팔아 번 돈에서 내야 할 세금을 계산합니다. 이익과 손실은 합쳐서 넣으세요.</p>
+  <section class="calc" aria-label="해외주식 양도세 계산">
+<div class="row"><label class="label" for="sell">양도가액 합계 (원화)</label><div class="money"><input id="sell" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 30,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="buy">취득가액 합계 (원화)</label><div class="money"><input id="buy" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 20,000,000"><span>원</span></div></div>
+<div class="row"><label class="label" for="fee">수수료 등 필요경비</label><div class="money"><input id="fee" class="num" inputmode="numeric" autocomplete="off" placeholder="예: 50,000"><span>원</span></div></div>
+    <div class="result" id="result" aria-live="polite"><div class="sub">값을 입력하면 결과가 여기에 나옵니다.</div></div>
+  </section>
+  <article>
+
+    <h2>계산 방법</h2>
+    <table class="rate"><tbody>
+      <tr><th>양도차익</th><td>양도가액 − 취득가액 − 필요경비 (같은 해 손실과 합산)</td></tr>
+      <tr><th>과세표준</th><td>양도차익 − 기본공제 250만 원</td></tr>
+      <tr><th>세액</th><td>과세표준 × 20% + 지방소득세 2% = 22%</td></tr>
+    </tbody></table>
+    <p>원화 환산은 판 날과 산 날의 기준환율을 각각 씁니다. 증권사의 해외주식 양도소득 계산 자료를 그대로 넣으면 편합니다.</p>
+    <h2>계산 예시</h2>
+    <div class="ex"><b>양도가액 3,000만 원, 취득가액 2,000만 원, 수수료 5만 원</b><br>양도차익 995만 원 − 250만 원 = 과세표준 745만 원 → 세금 149만 원 + 14만 9천 원 = <b>1,639,000원</b></div>
+    <h2>자주 묻는 질문</h2>
+    <details><summary>국내 주식과 합산되나요?</summary><p>해외주식끼리는 같은 해 이익과 손실을 합칩니다. 국내 상장주식 중 과세 대상(대주주 등)이 아닌 일반 소액주주 매매분은 합산하지 않습니다.</p></details>
+    <details><summary>배당금은요?</summary><p>배당금은 양도소득이 아니라 배당소득이라 별도로 세금이 붙습니다.</p></details>
+    <h2>다른 계산기</h2>
+    <div class="more"><a href="interest-tax.html">이자소득세 계산기</a><a href="cgt.html">부동산 양도소득세 계산기</a><a href="exchange.html">환율 계산기</a></div>
+    <h2>기준과 출처</h2>
+    <p>소득세법 제94조(양도소득의 범위), 제103조(양도소득 기본공제 250만 원), 제104조(세율: 국외주식 20%), 제118조의2 이하(국외자산 양도에 대한 양도소득세). 지방세법(지방소득세 10%).</p>
+    <p class="disclaimer">이 계산기는 참고용입니다. 실제 금액은 개별 조건에 따라 달라질 수 있습니다. 기준일: 2026년 11월.</p>
+  </article>
+</main>
+<footer><nav class="flinks"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a><a href="https://blog.naver.com/real_estate_story" target="_blank" rel="noopener">라떼타임 블로그</a></nav>© 라떼타임 계산기</footer>
+<script>
+
+var $ = function(id){ return document.getElementById(id); };
+function num(id){ var el=$(id); if(!el) return 0; var v=(el.value||'').replace(/,/g,'').replace(/[^0-9.\-]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; }
+function man(n){ n=Math.round(n); if(n===0) return '0원'; var neg=n<0; n=Math.abs(n); var eok=Math.floor(n/1e8), r=n%1e8, m=Math.floor(r/1e4), w=r%1e4, s=[]; if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(m) s.push(m.toLocaleString('ko-KR')+'만'); if(w) s.push(w.toLocaleString('ko-KR')); return (neg?'-':'')+s.join(' ')+'원'; }
+function pct(x, d){ return (x*100).toFixed(d===undefined?2:d) + '%'; }
+function val(name){ var c=document.querySelector('input[name="'+name+'"]:checked'); return c?c.value:''; }
+function empty(msg){ $('result').innerHTML = '<div class="sub">'+(msg||'값을 입력하면 결과가 여기에 나옵니다.')+'</div>'; }
+function rows(list){ return '<table>' + list.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('') + '</table>'; }
+function show(sub, big, list, note){ $('result').innerHTML = '<div class="sub">'+sub+'</div><div class="big">'+big+'</div>' + (list?rows(list):'') + (note?'<div class="note">'+note+'</div>':''); }
+function bind(){
+  document.querySelectorAll('input.num').forEach(function(el){ el.addEventListener('input', function(){ var raw=this.value.replace(/[^0-9]/g,''); this.value = raw ? parseInt(raw,10).toLocaleString('ko-KR') : ''; render(); }); });
+  document.querySelectorAll('input.dec').forEach(function(el){ el.addEventListener('input', function(){ this.value=this.value.replace(/[^0-9.]/g,''); render(); }); });
+  document.querySelectorAll('input[type=radio],input[type=checkbox],input[type=date],select').forEach(function(el){ el.addEventListener('change', render); el.addEventListener('input', render); });
+  render();
+}
+
+// CALC-START
+
+function foreignStockTax(sell, buy, fee){
+  var gain = sell - buy - fee;
+  var base = Math.max(gain - 2500000, 0);
+  var tax = Math.floor(base * 20 / 100 / 10 + 1e-9) * 10;
+  var local = Math.floor(tax / 100 + 1e-9) * 10;
+  return {gain: gain, base: base, tax: tax, local: local, total: tax + local};
+}
+// CALC-END
+
+function render(){
+  var s = num('sell'), b = num('buy');
+  if (!s || !b){ empty('양도가액과 취득가액을 입력하면 결과가 여기에 나옵니다.'); return; }
+  var r = foreignStockTax(s, b, num('fee'));
+  show('양도소득세 + 지방소득세', won(r.total), [
+    ['양도차익', won(r.gain)], ['기본공제', won(Math.min(Math.max(r.gain, 0), 2500000))], ['과세표준', won(r.base)],
+    ['양도소득세 (20%)', won(r.tax)], ['지방소득세 (2%)', won(r.local)]
+  ], r.gain <= 2500000 ? '양도차익이 250만 원 이하라 낼 세금이 없습니다. 이익이 있었다면 신고는 해 두는 것이 좋습니다.' : '다음 해 5월 1일~31일에 홈택스에서 신고·납부합니다.');
+}
+bind();
+</script>
+</body>
+</html>
